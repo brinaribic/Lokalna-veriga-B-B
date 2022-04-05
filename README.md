@@ -2,7 +2,7 @@
 Projekt pri Osnovah podatkovnih baz
 
 ### ER diagram
-![ER diagram](https://github.com/github.com/brinaribic/projektna-naloga/diagram/er_diagram.pdf)
+![ER diagram](https://github.com/brinaribic/projektna-naloga/blob/main/diagram/er_diagram.pdf)
 
 
 
