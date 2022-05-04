@@ -22,8 +22,7 @@ CREATE TABLE soba (
 CREATE TABLE zajtrk (
     id INTEGER PRIMARY KEY,
     ime TEXT NOT NULL,
-    cena INTEGER NOT NULL,
-    pripravlja INTEGER NOT NULL REFERENCES zaposleni(emso) 
+    cena INTEGER NOT NULL
 );
 
 CREATE TABLE rezervacija (
