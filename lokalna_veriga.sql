@@ -13,7 +13,7 @@ CREATE TABLE lokacija (
 
 CREATE TABLE soba (
     id INTEGER PRIMARY KEY,
-    velikost INTEGER NOT NULL,
+    velikost TEXT NOT NULL,
     cena INTEGER NOT NULL,
     lokacija INTEGER NOT NULL REFERENCES lokacija(id),
     ureja INTEGER NOT NULL REFERENCES zaposleni(emso)
