@@ -1,0 +1,10 @@
+insert into lokacija (id, ime, vodja) values (1, 'Ullrich Inc', 202);
+insert into lokacija (id, ime, vodja) values (2, 'Harber-Marvin', 12);
+insert into lokacija (id, ime, vodja) values (3, 'Brown-Strosin', 245);
+insert into lokacija (id, ime, vodja) values (4, 'Lehner-Feeney', 115);
+insert into lokacija (id, ime, vodja) values (5, 'Zieme Inc', 6);
+insert into lokacija (id, ime, vodja) values (6, 'Predovic-Stanton', 20);
+insert into lokacija (id, ime, vodja) values (7, 'Walker Inc', 101);
+insert into lokacija (id, ime, vodja) values (8, 'Buckridge-Gutkowski', 20);
+insert into lokacija (id, ime, vodja) values (9, 'Ullrich-Boyle', 220);
+insert into lokacija (id, ime, vodja) values (10, 'Lesch, Kerluke and Fisher', 213);

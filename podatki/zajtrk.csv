@@ -1,8 +1,8 @@
-id,ime,cena,pripravlja
-1,mesni,"€8,09",189
-2,vegetarijanski,"€13,53",88
-3,veganski,"€11,30",33
-4,sladek,"€4,69",195
-5,brez laktoze,"€6,30",191
-6,brez glutena,"€7,50",186
-7,otroški,"€13,97",211
+id,ime,cena
+1,mesni,12
+2,vegetarijanski,7
+3,veganski,6
+4,sladek,15
+5,brez laktoze,6
+6,brez glutena,11
+7,otroški,10
