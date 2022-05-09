@@ -1,0 +1,20 @@
+%rebase('base.html', naslov='Rezervacije')
+
+<table cellpadding="0" cellspacing="0" border="1">
+<tr>
+    <th>id</th>
+    <th>Rezervirana soba</th>
+    <th>Pričetek bivanja</th>
+    <th>Število nočitev</th>
+    <th>Zajtrk</th>
+</tr>
+%for (id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje) in rezervacija:
+    <tr>
+        <td>{{id}}</td>
+        <td>{{rezervirana_soba}}</td>
+        <td>{{pricetek_bivanja}}</td>
+        <td>{{stevilo_nocitev}}</td>
+        <td>{{vkljucuje}}</td>
+    </tr>
+%end
+</table>

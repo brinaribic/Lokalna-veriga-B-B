@@ -1,0 +1,14 @@
+%rebase('base.html', naslov='Izbira uporabnika')
+
+<form action="/zaposleni/izbira" method="GET">
+    <button type="submit">Zaposleni</button>
+</form>
+
+<form action="/rezervacija/nova" method="GET">
+    <button type="submit">Nova rezervacija</button>
+</form>
+
+<form action="/rezervacija/pregled/<id_rezervacije>" method="GET">
+    <button type="submit">Pregled rezervacij</button>
+</form>
+
