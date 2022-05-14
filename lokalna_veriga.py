@@ -29,16 +29,16 @@ def izbira_pregleda():
 @get('/zaposleni/rezervacije')
 def pregled_vseh_rezervacij():
     cur.execute("""
-        SELECT id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje from rezervacija
+        SELECT id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje FROM rezervacija
         ORDER BY pricetek_bivanja
     """)
     rezervacija = cur.fetchall()
-    return template('pregled_rezervacja.html', rezervacija=rezervacija)
+    return template('pregled_rezervacija.html', rezervacija=rezervacija)
 
 @get('/zaposleni/osebje')
 def pregled_osebja():
     cur.execute("""
-        SELECT emso, ime, priimek from zaposleni
+        SELECT emso, ime, priimek FROM zaposleni
         ORDER BY priimek
     """)
     osebje = cur.fetchall()
@@ -47,9 +47,9 @@ def pregled_osebja():
 @get('/zaposleni/lokacije')
 def pregled_lokacij():
     cur.execute("""
-        SELECT id, lokacija.ime, vodja, zaposleni.ime, zaposleni.priimek 
+        SELECT lokacija.id, lokacija.ime AS lokacija, lokacija.vodja, zaposleni.ime, zaposleni.priimek 
         FROM lokacija
-        INNER JOIN zaposleni ON zaposleni.emso = lokacija.vodja
+        INNER JOIN zaposleni ON lokacija.vodja = zaposleni.emso
     """)
     lokacije = cur.fetchall()
     return template('pregled_lokacij.html', lokacije=lokacije)
@@ -59,7 +59,7 @@ def pregled_sob_lokacije(id_lokacije):
     cur.execute("""
         SELECT id, velikost, cena, ureja, zaposleni.ime, zaposleni.priimek
         FROM soba
-        INNER JOIN zaposleni ON zaposleni.emso = soba.ureja
+        INNER JOIN zaposleni ON soba.ureja = zaposleni.emso
         WHERE lokacija=%s
         ORDER BY soba.id
         """, 
