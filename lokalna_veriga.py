@@ -45,6 +45,7 @@ def pregled_vseh_rezervacij():
 
 @get('/zaposleni/osebje')
 def pregled_osebja():
+    napaka = nastaviSporocilo()
     cur.execute("""
         SELECT emso, ime, priimek FROM zaposleni
         ORDER BY priimek
