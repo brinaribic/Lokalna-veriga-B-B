@@ -8,22 +8,22 @@
         <th>Vodja - emšo</th>
         <th>Vodja - ime</th>
         <th>Vodja - priimek</th>
+        <th>Akcije</th>
     </tr>
     %for (id, lokacija, vodja, ime, priimek) in lokacije:
-        <tr>
-            <td onclick="myFunction()">{{id}}</td>
-            <td>{{lokacija}}</td>
-            <td>{{vodja}}</td>
-            <td>{{ime}}</td>
-            <td>{{priimek}}</td>
-        </tr>
+    <tr>
+        <td>{{id}}</td>
+        <td>{{lokacija}}</td>
+        <td>{{vodja}}</td>
+        <td>{{ime}}</td>
+        <td>{{priimek}}</td>
+        <td>
+            <form action="/zaposleni/sobe/{{id}}" method="get">
+                <input value="Preglej sobe na lokaciji" type="submit" />
+            </form>
+        </td>
+    </tr>
     %end
 </table>
     
-<!-- naknadno dodaj opcijo, da ob pritisku na okence v tabeli z imenom lokacije dobiš pregled nad vsemi sobami na lokaciji (JAVA SCRIPT)-->
-<script>
-    function myFunction(x) {
-        alert("Row index is: " + x.rowIndex);
-    }
-</script>
 

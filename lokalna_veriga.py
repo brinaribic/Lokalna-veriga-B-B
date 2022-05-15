@@ -114,18 +114,19 @@ def pregled_lokacij():
     lokacije = cur.fetchall()
     return template('pregled_lokacij.html', lokacije=lokacije)
 
-@get('/zaposleni/<id_lokacije>/sobe')
-def pregled_sob_lokacije(id_lokacije):
+# pregled sob na določeni lokaciji
+@get('/zaposleni/sobe/<id>')
+def pregled_sob_lokacije(id):
     cur.execute("""
-        SELECT id, velikost, cena, ureja, zaposleni.ime, zaposleni.priimek
-        FROM soba
+        SELECT soba.id, velikost, cena, zaposleni.ime, zaposleni.priimek FROM soba
+        INNER JOIN lokacija ON soba.lokacija = lokacija.id
         INNER JOIN zaposleni ON soba.ureja = zaposleni.emso
-        WHERE lokacija=%s
+        WHERE lokacija = %s
         ORDER BY soba.id
         """, 
-        (id_lokacije,))
+        (id, ))
     sobe = cur.fetchall()
-    return template('pregled_sob_lokacije.html', sobe=sobe)
+    return template('pregled_sob.html', sobe=sobe)
 
 @get('/zaposleni/zajtrki')
 def pregled_zajtrkov():
