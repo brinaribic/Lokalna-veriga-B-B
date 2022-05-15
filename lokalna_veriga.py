@@ -3,9 +3,6 @@ import auth_public as auth
 import psycopg2, psycopg2.extensions, psycopg2.extras
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo problemov s sumniki
 
-# Odkomentiraj, če želiš sporočila o napakah
-debug(True)
-
 napakaSporocilo = None
 # funkcija za brisanje in nastavljanje sporočila ob morebitnem pojavu napake
 def nastaviSporocilo(sporocilo = None):
@@ -17,6 +14,19 @@ def nastaviSporocilo(sporocilo = None):
 conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
 
+
+# mapa za statične vire
+static_dir = "./static"
+
+# streženje statičnih datotek
+@route("/static/<filename:path>")
+def static(filename):
+    return static_file(filename, root=static_dir)
+
+# Odkomentiraj, če želiš sporočila o napakah
+debug(True)
+
+
 @get('/')
 def index():
     redirect('/izbira_uporabnika')
@@ -24,7 +34,8 @@ def index():
 # Ali se želimo prijaviti kot zaposleni ali skozi rezervacijo:
 @get('/izbira_uporabnika')
 def izbira_uporabnika():
-    return template('izbira_uporabnika.html', izbira_uporabnika=izbira_uporabnika)
+    napaka = nastaviSporocilo(None)
+    return template('izbira_uporabnika.html', izbira_uporabnika=izbira_uporabnika, napaka=napaka)
 
 #@get('/zaposleni/prijava')
 

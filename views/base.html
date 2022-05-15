@@ -3,14 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <title>{{naslov}}</title>
+        <link rel="stylesheet" type="text/css" href="static/stili.css" />
     </head>
     <body>
         <h2>{{naslov}}</h2>
-
         % if napaka:
+        <div class="napaka-box zaokrozeni-vogali"></div>
             {{napaka}}
+        </div>
         % end
-
         {{!base}}
     </body>
 </html>
