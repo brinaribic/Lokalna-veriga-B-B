@@ -44,6 +44,17 @@ def pregled_osebja():
     osebje = cur.fetchall()
     return template('pregled_zaposleni.html', osebje=osebje)
 
+# dodajanje zaposlenih
+@post('/zaposleni/osebje/dodaj')
+def dodaj_zaposlenega():
+    emso = request.forms.get('emso')
+    ime = request.forms.get('ime')
+    priimek = request.forms.get('priimek')
+    cur.execute("INSERT INTO zaposleni (emso, ime, priimek) VALUES (%s, %s, %s)", (emso, ime, priimek))
+    conn.commit()
+    redirect('/zaposleni/osebje')
+
+
 @get('/zaposleni/lokacije')
 def pregled_lokacij():
     cur.execute("""
@@ -96,13 +107,12 @@ def dodaj_rezervacijo():
     conn.commit()
     redirect('/rezervacija/nova')
 
-
+# poizvedba, ki uporabniku vrne le njegovo rezervacijo
 @get('/rezervacija/pregled/<id_rezervacije>')
 def pregled_rezervacije(id_rezervacije):
-    cur.execute("SELECT * FROM rezervacija WHERE id=%s", (id_rezervacije,))
+    cur.execute("SELECT * FROM rezervacija WHERE id = %s", (id_rezervacije, ))
     rezervacija = cur.fetchall()
-    return template('pregled_rezervacja.html', rezervacija=rezervacija)
-
+    return template('obstojeca_rezervacija.html', rezervacija=rezervacija)
 
 
 
