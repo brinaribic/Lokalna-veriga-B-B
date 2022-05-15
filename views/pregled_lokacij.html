@@ -5,18 +5,14 @@
     <tr>
         <th>id</th>
         <th>Lokacija</th>
-        <th>Vodja - emšo</th>
-        <th>Vodja - ime</th>
-        <th>Vodja - priimek</th>
+        <th>Vodja</th>
         <th>Akcije</th>
     </tr>
-    %for (id, lokacija, vodja, ime, priimek) in lokacije:
+    %for (id, lokacija, ime, priimek) in lokacije:
     <tr>
         <td>{{id}}</td>
         <td>{{lokacija}}</td>
-        <td>{{vodja}}</td>
-        <td>{{ime}}</td>
-        <td>{{priimek}}</td>
+        <td>{{ime}} {{priimek}}</td>
         <td>
             <form action="/zaposleni/sobe/{{id}}" method="get">
                 <input value="Preglej sobe na lokaciji" type="submit" />
