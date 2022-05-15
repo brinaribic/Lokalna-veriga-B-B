@@ -9,15 +9,21 @@
 
 <table cellpadding="0" cellspacing="0" border="1">
 <tr>
-    <th>EMŠO</th>
+    <th>Emšo</th>
     <th>Ime</th>
     <th>Priimek</th>
+    <th>Akcije</th>
 </tr>
 %for (emso,ime,priimek) in osebje:
     <tr>
         <td>{{emso}}</td>
         <td>{{ime}}</td>
         <td>{{priimek}}</td>
+        <td>
+            <form action="/zaposleni/osebje/brisi/{{emso}}" method="post">
+                <input value="Briši" type="submit" />
+            </form>
+        </td>
     </tr>
 %end
 </table>

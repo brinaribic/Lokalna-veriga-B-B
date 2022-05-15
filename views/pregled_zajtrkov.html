@@ -12,12 +12,18 @@
     <th>id</th>
     <th>Ime</th>
     <th>Cena</th>
+    <th>Akcije</th>
 </tr>
 %for (id,ime,cena) in zajtrki:
     <tr>
         <td>{{id}}</td>
         <td>{{ime}}</td>
         <td>{{cena}}</td>
+        <td>
+            <form action="/zaposleni/zajtrki/brisi/{{id}}" method="post">
+                <input value="Briši" type="submit" />
+            </form>
+        </td>
     </tr>
 %end
 </table>

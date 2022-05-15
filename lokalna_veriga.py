@@ -47,10 +47,17 @@ def pregled_osebja():
 # dodajanje zaposlenih
 @post('/zaposleni/osebje/dodaj')
 def dodaj_zaposlenega():
-    emso = request.forms.get('emso')
-    ime = request.forms.get('ime')
-    priimek = request.forms.get('priimek')
+    emso = request.forms.emso
+    ime = request.forms.ime
+    priimek = request.forms.priimek
     cur.execute("INSERT INTO zaposleni (emso, ime, priimek) VALUES (%s, %s, %s)", (emso, ime, priimek))
+    conn.commit()
+    redirect('/zaposleni/osebje')
+
+# brisanje zaposlenih
+@post('/zaposleni/osebje/brisi/<emso>')
+def brisi_zaposlenega(emso):
+    cur.execute("DELETE FROM zaposleni WHERE emso =  %s", (emso, ))
     conn.commit()
     redirect('/zaposleni/osebje')
 
@@ -88,12 +95,20 @@ def pregled_zajtrkov():
     zajtrki = cur.fetchall()
     return template('pregled_zajtrkov.html', zajtrki=zajtrki)
 
+# dodajanje zajtrkov
 @post('/zaposleni/zajtrki/dodaj')
 def dodaj_zajtrk():
-    id = request.forms.get('id')
-    ime = request.forms.get('ime')
-    cena = request.forms.get('cena')
+    id = request.forms.id
+    ime = request.forms.ime
+    cena = request.forms.cena
     cur.execute("INSERT INTO zajtrk (id, ime, cena) VALUES (%s, %s, %s)", (id, ime, cena))
+    conn.commit()
+    redirect('/zaposleni/zajtrki')
+
+# brisanje zajtrkov
+@post('/zaposleni/zajtrki/brisi/<id>')
+def brisi_zajtrk(id):
+    cur.execute("DELETE FROM zajtrk WHERE id =  %s", (id, ))
     conn.commit()
     redirect('/zaposleni/zajtrki')
 
