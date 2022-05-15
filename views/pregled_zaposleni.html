@@ -1,4 +1,5 @@
-%rebase('base.html', naslov='Pregled osebja')
+% setdefault('napaka', '')
+% rebase('base.html', naslov='Pregled osebja', napaka=napaka)
 
 <form action="/zaposleni/osebje/dodaj" method="post">
     <span>Emšo:</span> <input name="emso" type="text" />

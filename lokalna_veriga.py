@@ -6,6 +6,14 @@ psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo prob
 # Odkomentiraj, če želiš sporočila o napakah
 debug(True)
 
+napakaSporocilo = None
+# funkcija za brisanje in nastavljanje sporočila ob morebitnem pojavu napake
+def nastaviSporocilo(sporocilo = None):
+    global napakaSporocilo
+    staro = napakaSporocilo
+    napakaSporocilo = sporocilo
+    return staro
+
 conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
 
@@ -42,7 +50,7 @@ def pregled_osebja():
         ORDER BY priimek
     """)
     osebje = cur.fetchall()
-    return template('pregled_zaposleni.html', osebje=osebje)
+    return template('pregled_zaposleni.html', osebje=osebje, napaka=napaka)
 
 # dodajanje zaposlenih
 @post('/zaposleni/osebje/dodaj')
@@ -57,8 +65,12 @@ def dodaj_zaposlenega():
 # brisanje zaposlenih
 @post('/zaposleni/osebje/brisi/<emso>')
 def brisi_zaposlenega(emso):
-    cur.execute("DELETE FROM zaposleni WHERE emso =  %s", (emso, ))
-    conn.commit()
+    napaka = nastaviSporocilo()
+    try:
+        cur.execute("DELETE FROM zaposleni WHERE emso =  %s", (emso, ))
+        conn.commit()
+    except:
+        nastaviSporocilo('Brisanje zaposlenega {0} ni bilo uspešno.'.format(emso))
     redirect('/zaposleni/osebje')
 
 
@@ -87,13 +99,14 @@ def pregled_sob_lokacije(id_lokacije):
 
 @get('/zaposleni/zajtrki')
 def pregled_zajtrkov():
+    napaka = nastaviSporocilo() # s tem izbrišemo  napako in dobimo morebitno novo sporočilo
     cur.execute("""
         SELECT id, ime, cena
         FROM zajtrk
         ORDER BY id
     """)
     zajtrki = cur.fetchall()
-    return template('pregled_zajtrkov.html', zajtrki=zajtrki)
+    return template('pregled_zajtrkov.html', zajtrki=zajtrki, napaka=napaka)
 
 # dodajanje zajtrkov
 @post('/zaposleni/zajtrki/dodaj')
@@ -108,8 +121,11 @@ def dodaj_zajtrk():
 # brisanje zajtrkov
 @post('/zaposleni/zajtrki/brisi/<id>')
 def brisi_zajtrk(id):
-    cur.execute("DELETE FROM zajtrk WHERE id =  %s", (id, ))
-    conn.commit()
+    try:
+        cur.execute("DELETE FROM zajtrk WHERE id =  %s", (id, ))
+        conn.commit()
+    except:
+        nastaviSporocilo('Brisanje zajtrka {0} ni bilo uspešno.'.format(id))
     redirect('/zaposleni/zajtrki')
 
 #@get('/rezervacija/prijava')

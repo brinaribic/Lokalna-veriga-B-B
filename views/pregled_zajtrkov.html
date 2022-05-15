@@ -1,4 +1,5 @@
-%rebase('base.html', naslov='Mogoči zajtrki')
+% setdefault('napaka', '')
+% rebase('base.html', naslov='Mogoči zajtrki', napaka=napaka)
 
 <form action="/zaposleni/zajtrki/dodaj" method="post">
     <span>Id:</span> <input name="id" type="text" />

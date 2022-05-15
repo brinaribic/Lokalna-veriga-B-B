@@ -1,5 +1,7 @@
 % setdefault('napaka', '')
-% rebase('base.html', naslov='Obstoječe rezervacije', napaka=napaka)
+% rebase('base.html', naslov='Pregled nad obstoječo rezervacijo', napaka=napaka)
+
+% include('orodna-vrstica.html', povezava='/rezervacija/pregled/{{id_rezervacije}}>, napis="Oglej si rezervacijo", stolpci='[1,2,3,4,5,6]')
 
 <table cellpadding="0" cellspacing="0" border="1">
 <tr>
@@ -9,7 +11,7 @@
     <th>Število nočitev</th>
     <th>Zajtrk</th>
 </tr>
-%for (id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje) in rezervacija:
+% for (id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje) in rezervacija:
     <tr>
         <td>{{id}}</td>
         <td>{{rezervirana_soba}}</td>
@@ -17,5 +19,6 @@
         <td>{{stevilo_nocitev}}</td>
         <td>{{vkljucuje}}</td>
     </tr>
-%end
+% end
 </table>
+ 

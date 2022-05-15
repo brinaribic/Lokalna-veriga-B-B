@@ -1,4 +1,5 @@
-%rebase('base.html', naslov='Zaposleni - izberi želeno področje')
+% setdefault('napaka', '')
+% rebase('base.html', naslov='Zaposleni - izberi želeno področje', napaka=napaka)
 
 <form action="/zaposleni/rezervacije" method="GET">
     <button type="submit">Pregled vseh obstoječih rezervacij</button>
