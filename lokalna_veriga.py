@@ -88,6 +88,15 @@ def pregled_zajtrkov():
     zajtrki = cur.fetchall()
     return template('pregled_zajtrkov.html', zajtrki=zajtrki)
 
+@post('/zaposleni/zajtrki/dodaj')
+def dodaj_zajtrk():
+    id = request.forms.get('id')
+    ime = request.forms.get('ime')
+    cena = request.forms.get('cena')
+    cur.execute("INSERT INTO zajtrk (id, ime, cena) VALUES (%s, %s, %s)", (id, ime, cena))
+    conn.commit()
+    redirect('/zaposleni/zajtrki')
+
 #@get('/rezervacija/prijava')
 
 @get('/rezervacija/nova')
