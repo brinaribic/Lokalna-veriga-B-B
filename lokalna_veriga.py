@@ -68,7 +68,7 @@ def pregled_sob_lokacije(id_lokacije):
     return template('pregled_sob_lokacije.html', sobe=sobe)
 
 @get('/zaposleni/zajtrki')
-def pregled_lokacij():
+def pregled_zajtrkov():
     cur.execute("""
         SELECT id, ime, cena
         FROM zajtrk
