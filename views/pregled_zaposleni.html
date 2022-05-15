@@ -1,12 +1,7 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Pregled osebja', napaka=napaka)
 
-<form action="/zaposleni/osebje/dodaj" method="post">
-    <span>Emšo:</span> <input name="emso" type="text" />
-    <span>Ime:</span> <input name="ime" type="text" />
-    <span>Priimek:</span> <input name="priimek" type="text" />
-    <input value="Dodaj" type="submit" />
-</form>
+<a href="/zaposleni/osebje/dodaj">Dodaj zaposlenega</a>
 
 <table cellpadding="0" cellspacing="0" border="1">
 <tr>
@@ -23,6 +18,9 @@
         <td>
             <form action="/zaposleni/osebje/brisi/{{emso}}" method="post">
                 <input value="Briši" type="submit" />
+            </form>
+            <form action="/zaposleni/osebje/uredi/{{emso}}" method="get">
+                <input value="Uredi" type="submit" />
             </form>
         </td>
     </tr>

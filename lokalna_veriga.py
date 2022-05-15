@@ -64,7 +64,11 @@ def pregled_osebja():
     osebje = cur.fetchall()
     return template('pregled_zaposleni.html', osebje=osebje, napaka=napaka)
 
-# dodajanje zaposlenih
+# dodajanje zaposlenih - dostop do ustreznega okna in potrditev izpolnjenega obrazca
+@get('/zaposleni/osebje/dodaj')
+def dodaj_zaposlenega_get():
+    return template('zaposleni_uredi.html')
+
 @post('/zaposleni/osebje/dodaj')
 def dodaj_zaposlenega():
     emso = request.forms.emso
@@ -85,6 +89,20 @@ def brisi_zaposlenega(emso):
         nastaviSporocilo('Brisanje zaposlenega {0} ni bilo uspešno.'.format(emso))
     redirect('/zaposleni/osebje')
 
+# urejanje osebja
+@get('/zaposleni/osebje/uredi/<emso>')
+def uredi_zaposlenega_get(emso):
+    cur.execute("SELECT emso, ime, priimek FROM zaposleni WHERE emso = %s", (emso, ))
+    zaposleni = cur.fetchone()
+    return template('zaposleni_uredi.html', zaposleni=zaposleni)
+
+@post('/zaposleni/osebje/uredi/<emso>')
+def uredi_zaposlenega_post(emso):
+    ime = request.forms.ime
+    priimek = request.forms.priimek
+    cur.execute("UPDATE zaposleni SET ime = %s, priimek = %s WHERE emso = %s", (ime, priimek, emso))
+    conn.commit()
+    redirect('/zaposleni/osebje')
 
 @get('/zaposleni/lokacije')
 def pregled_lokacij():
@@ -121,6 +139,10 @@ def pregled_zajtrkov():
     return template('pregled_zajtrkov.html', zajtrki=zajtrki, napaka=napaka)
 
 # dodajanje zajtrkov
+@get('/zaposleni/zajtrki/dodaj')
+def dodaj_zajtrk_get():
+    return template('zajtrk_uredi.html')
+
 @post('/zaposleni/zajtrki/dodaj')
 def dodaj_zajtrk():
     id = request.forms.id
@@ -138,6 +160,21 @@ def brisi_zajtrk(id):
         conn.commit()
     except:
         nastaviSporocilo('Brisanje zajtrka {0} ni bilo uspešno.'.format(id))
+    redirect('/zaposleni/zajtrki')
+
+# urejanje zajtrkov
+@get('/zaposleni/zajtrki/uredi/<id>')
+def uredi_zajtrk_get(id):
+    cur.execute("SELECT id, ime, cena FROM zajtrk WHERE id = %s", (id, ))
+    zajtrk = cur.fetchone()
+    return template('zajtrk_uredi.html', zajtrk=zajtrk)
+
+@post('/zaposleni/zajtrki/uredi/<id>')
+def uredi_zajtrk_post(id):
+    ime = request.forms.ime
+    cena = request.forms.cena
+    cur.execute("UPDATE zajtrk SET ime = %s, cena = %s WHERE id = %s", (ime, cena, id))
+    conn.commit()
     redirect('/zaposleni/zajtrki')
 
 #@get('/rezervacija/prijava')

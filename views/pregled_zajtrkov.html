@@ -1,12 +1,7 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Mogoči zajtrki', napaka=napaka)
 
-<form action="/zaposleni/zajtrki/dodaj" method="post">
-    <span>Id:</span> <input name="id" type="text" />
-    <span>Ime:</span> <input name="ime" type="text" />
-    <span>Cena:</span> <input name="cena" type="text" />
-    <input value="Dodaj" type="submit" />
-</form>
+<a href="/zaposleni/zajtrki/dodaj">Dodaj zajtrk</a>
 
 <table cellpadding="0" cellspacing="0" border="1">
 <tr>
@@ -23,6 +18,9 @@
         <td>
             <form action="/zaposleni/zajtrki/brisi/{{id}}" method="post">
                 <input value="Briši" type="submit" />
+            </form>
+            <form action="/zaposleni/zajtrki/uredi/{{id}}" method="get">
+                <input value="Uredi" type="submit" />
             </form>
         </td>
     </tr>

@@ -1,0 +1,59 @@
+% setdefault('napaka', '')
+% rebase('base.html', naslov='Dodajanje novega zaposlenega', napaka=napaka)
+
+% if defined('zaposleni'):
+<form action="/zaposleni/osebje/uredi/{{zaposleni[0]}}" method="post">
+% else:
+<form action="/zaposleni/osebje/dodaj" method="post">
+% end
+    <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td>
+                <span>Emšo:</span> 
+            </td>
+            <td>
+                % if defined('zaposleni'):
+                    {{zaposleni[0]}}
+                % else:
+                <input name="emso" type="text" /> 
+                % end
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Ime:</span>
+            </td>
+            <td>
+                % if defined('zaposleni'):
+                <input name="ime" type="text" value="{{zaposleni[1]}}" />
+                % else:
+                <input name="ime" type="text" />
+                % end
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Priimek:</span>
+            </td>
+            <td>
+                % if defined('zaposleni'):
+                <input name="priimek" type="text" value="{{zaposleni[2]}}" />
+                % else:
+                <input name="priimek" type="text" />
+                % end
+            </td>
+        </tr>
+        <tr>
+            <td>
+                
+            </td>
+            <td>
+                % if defined('zaposleni'):
+                <input value="Popravi" type="submit" />
+                % else:
+                <input value="Dodaj" type="submit" />
+                % end
+            </td>
+        </tr>
+    </table>
+</form>
