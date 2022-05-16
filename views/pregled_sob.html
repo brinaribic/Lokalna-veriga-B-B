@@ -1,23 +1,25 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Sobe na izbrani lokaciji', napaka=napaka)
 
-% include('orodna_vrstica.html', povezava='', napis='')
+<div style="display: inline-block;">
+    % include('orodna_vrstica.html', povezava='', napis='')
 
-<form action="/zaposleni/sobe/{{sobe[0]}}" method="get">
-    <table id="izpis" cellpadding="0" cellspacing="0" border="1">
-    <tr>
-        <th>id</th>
-        <th>Velikost sobe</th>
-        <th>Cena</th>
-        <th>Odgovorna oseba</th>
-    </tr>
-    %for (id, velikost, cena, ime, priimek) in sobe:
+    <form action="/zaposleni/sobe/{{sobe[0]}}" method="get">
+        <table id="izpis" cellpadding="0" cellspacing="0" border="1">
         <tr>
-            <td>{{id}}</td>
-            <td>{{velikost}}</td>
-            <td>{{cena}}</td>
-            <td>{{ime}} {{priimek}}</td>
+            <th>id</th>
+            <th>Velikost sobe</th>
+            <th>Cena</th>
+            <th>Odgovorna oseba</th>
         </tr>
-    %end
-    </table>
-</form>
+        %for (id, velikost, cena, ime, priimek) in sobe:
+            <tr>
+                <td>{{id}}</td>
+                <td>{{velikost}}</td>
+                <td>{{cena}}</td>
+                <td>{{ime}} {{priimek}}</td>
+            </tr>
+        %end
+        </table>
+    </form>
+</div>

@@ -1,28 +1,30 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Mogoči zajtrki', napaka=napaka)
 
-% include('orodna_vrstica.html', povezava='/zaposleni/zajtrki/dodaj', napis='Dodaj zajtrk')
+<div style="display: inline-block;">
+    % include('orodna_vrstica.html', povezava='/zaposleni/zajtrki/dodaj', napis='Dodaj zajtrk')
 
-<table id="izpis" cellpadding="0" cellspacing="0" border="1">
-<tr>
-    <th>id</th>
-    <th>Ime</th>
-    <th>Cena</th>
-    <th>Akcije</th>
-</tr>
-%for (id,ime,cena) in zajtrki:
+    <table id="izpis" cellpadding="0" cellspacing="0" border="1">
     <tr>
-        <td>{{id}}</td>
-        <td>{{ime}}</td>
-        <td>{{cena}}</td>
-        <td>
-            <form action="/zaposleni/zajtrki/brisi/{{id}}" method="post">
-                <input value="Briši" type="submit" />
-            </form>
-            <form action="/zaposleni/zajtrki/uredi/{{id}}" method="get">
-                <input value="Uredi" type="submit" />
-            </form>
-        </td>
+        <th>id</th>
+        <th>Ime</th>
+        <th>Cena</th>
+        <th>Akcije</th>
     </tr>
-%end
-</table>
+    %for (id,ime,cena) in zajtrki:
+        <tr>
+            <td>{{id}}</td>
+            <td>{{ime}}</td>
+            <td>{{cena}}</td>
+            <td>
+                <form action="/zaposleni/zajtrki/brisi/{{id}}" method="post">
+                    <input value="Briši" type="submit" />
+                </form>
+                <form action="/zaposleni/zajtrki/uredi/{{id}}" method="get">
+                    <input value="Uredi" type="submit" />
+                </form>
+            </td>
+        </tr>
+    %end
+    </table>
+</div>

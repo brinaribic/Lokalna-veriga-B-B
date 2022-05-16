@@ -1,5 +1,6 @@
 body {
     font-family: Arial;
+    background-color: green;
 }
 
 .napaka-box {
@@ -12,4 +13,17 @@ body {
 
 .zaokrozeni-vogali {
     border-radius: 4px;
+}
+
+.orodna-vrstica {
+    background-color: lightgray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+#isci {
+    line-height: 1.5rem;
+    margin-left: 0.25rem;
 }
