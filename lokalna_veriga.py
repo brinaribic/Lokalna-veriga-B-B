@@ -107,7 +107,7 @@ def uredi_zaposlenega_post(emso):
 @get('/zaposleni/lokacije')
 def pregled_lokacij():
     cur.execute("""
-        SELECT lokacija.id, lokacija.ime AS lokacija, lokacija.vodja, zaposleni.ime, zaposleni.priimek 
+        SELECT lokacija.id, lokacija.ime AS lokacija, zaposleni.ime, zaposleni.priimek 
         FROM lokacija
         INNER JOIN zaposleni ON lokacija.vodja = zaposleni.emso
     """)

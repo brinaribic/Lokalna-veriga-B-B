@@ -15,7 +15,7 @@
                 % if defined('zajtrk'):
                     {{zajtrk[0]}}
                 % else:
-                <input name="id" type="text" />  
+                <input name="id" type="number" required/>  
                 % end
             </td>
         </tr>
@@ -27,7 +27,7 @@
                 % if defined('zajtrk'):
                 <input name="ime" type="text" value="{{zajtrk[1]}}" />
                 % else:
-                <input name="ime" type="text" />
+                <input name="ime" type="text" required/>
                 % end
             </td>
         </tr>
@@ -39,7 +39,7 @@
                 % if defined('zajtrk'):
                 <input name="cena" type="text" value="{{zajtrk[2]}}" />
                 % else:
-                <input name="cena" type="text" />
+                <input name="cena" type="number" required/>
                 % end
             </td>
         </tr>
