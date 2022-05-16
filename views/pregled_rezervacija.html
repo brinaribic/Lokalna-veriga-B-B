@@ -1,9 +1,7 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Obstoječe rezervacije', napaka=napaka)
 
-<div>
-    Išči: <input id="isci" type="text" oninput="isci()"/>
-</div>
+% include('orodna_vrstica.html', povezava='', napis='')
 
 <table id="izpis" cellpadding="0" cellspacing="0" border="1">
 <tr>
@@ -23,20 +21,3 @@
     </tr>
 %end
 </table>
-
-<script>
-'use strict'
-function isci() {
-    let vrednost = document.getElementById('isci').value;
-    let tabela = document.getElementById('izpis');
-    [...tabela.rows].forEach(vrstica => {
-        let vsebina = vrstica.cells[1].innerText
-        if(vsebina.toLocaleLowerCase().indexOf(vrednost.toLocaleLowerCase()) >= 0) {
-            vrstica.style.display = ''
-        } else {
-            vrstica.style.display = 'none'
-        }
-    }) 
-    console.log(vrednost)
-}
-</script>

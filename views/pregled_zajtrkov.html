@@ -1,9 +1,9 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Mogoči zajtrki', napaka=napaka)
 
-<a href="/zaposleni/zajtrki/dodaj">Dodaj zajtrk</a>
+% include('orodna_vrstica.html', povezava='/zaposleni/zajtrki/dodaj', napis='Dodaj zajtrk')
 
-<table cellpadding="0" cellspacing="0" border="1">
+<table id="izpis" cellpadding="0" cellspacing="0" border="1">
 <tr>
     <th>id</th>
     <th>Ime</th>

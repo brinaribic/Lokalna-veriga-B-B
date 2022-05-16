@@ -1,9 +1,9 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Pregled osebja', napaka=napaka)
 
-<a href="/zaposleni/osebje/dodaj">Dodaj zaposlenega</a>
+% include('orodna_vrstica.html', povezava='/zaposleni/osebje/dodaj', napis='Dodaj zaposlenega')
 
-<table cellpadding="0" cellspacing="0" border="1">
+<table id="izpis" cellpadding="0" cellspacing="0" border="1">
 <tr>
     <th>Emšo</th>
     <th>Ime</th>
