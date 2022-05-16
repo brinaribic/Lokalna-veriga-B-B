@@ -15,7 +15,10 @@
                 % if defined('zaposleni'):
                     {{zaposleni[0]}}
                 % else:
-                <input name="emso" type="number" required/> 
+                <input name="emso" type="number" required
+                oninput="this.setCustomValidity('')"
+                oninvalid="this.setCustomValidity('Obvezno polje')" 
+                /> 
                 % end
             </td>
         </tr>
@@ -27,7 +30,10 @@
                 % if defined('zaposleni'):
                 <input name="ime" type="text" value="{{zaposleni[1]}}" />
                 % else:
-                <input name="ime" type="text" required/>
+                <input name="ime" type="text" required
+                oninput="this.setCustomValidity('')"
+                oninvalid="this.setCustomValidity('Obvezno polje')" 
+                />
                 % end
             </td>
         </tr>
@@ -39,7 +45,10 @@
                 % if defined('zaposleni'):
                 <input name="priimek" type="text" value="{{zaposleni[2]}}" />
                 % else:
-                <input name="priimek" type="text" required/>
+                <input name="priimek" type="text" required
+                oninput="this.setCustomValidity('')"
+                oninvalid="this.setCustomValidity('Obvezno polje')" 
+                />
                 % end
             </td>
         </tr>
