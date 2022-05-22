@@ -78,17 +78,6 @@ def dodaj_zaposlenega():
     conn.commit()
     redirect('/zaposleni/osebje')
 
-# brisanje zaposlenih
-@post('/zaposleni/osebje/brisi/<emso>')
-def brisi_zaposlenega(emso):
-    napaka = nastaviSporocilo()
-    try:
-        cur.execute("DELETE FROM zaposleni WHERE emso =  %s", (emso, ))
-        conn.commit()
-    except:
-        nastaviSporocilo('Brisanje zaposlenega {0} ni bilo uspešno.'.format(emso))
-    redirect('/zaposleni/osebje')
-
 # urejanje osebja
 @get('/zaposleni/osebje/uredi/<emso>')
 def uredi_zaposlenega_get(emso):
@@ -151,16 +140,6 @@ def dodaj_zajtrk():
     cena = request.forms.cena
     cur.execute("INSERT INTO zajtrk (id, ime, cena) VALUES (%s, %s, %s)", (id, ime, cena))
     conn.commit()
-    redirect('/zaposleni/zajtrki')
-
-# brisanje zajtrkov
-@post('/zaposleni/zajtrki/brisi/<id>')
-def brisi_zajtrk(id):
-    try:
-        cur.execute("DELETE FROM zajtrk WHERE id =  %s", (id, ))
-        conn.commit()
-    except:
-        nastaviSporocilo('Brisanje zajtrka {0} ni bilo uspešno.'.format(id))
     redirect('/zaposleni/zajtrki')
 
 # urejanje zajtrkov
