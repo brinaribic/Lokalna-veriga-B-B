@@ -181,12 +181,19 @@ def nova_rezervacija(id):
     (id, ))
     rezervacija = cur.fetchall()
     cur.execute("""
+    SELECT id, velikost, lokacija, cena
+    FROM soba
+    WHERE lokacija = %s
+    """,
+    (id, ))
+    soba = cur.fetchall()
+    cur.execute("""
         SELECT id, ime, cena
         FROM zajtrk
         ORDER BY id
     """)
     zajtrki = cur.fetchall()
-    return template('nova_rezervacija.html', nova_rezervacija=nova_rezervacija,zajtrki=zajtrki,rezervacija=rezervacija)
+    return template('nova_rezervacija.html', nova_rezervacija=nova_rezervacija,zajtrki=zajtrki,rezervacija=rezervacija,soba=soba)
 
 @post('/rezervacija/nova<id>')
 def dodaj_rezervacijo():
