@@ -159,11 +159,43 @@ def uredi_zajtrk_post(id):
 
 #@get('/rezervacija/prijava')
 
-@get('/rezervacija/nova')
-def nova_rezervacija():
-    return template('nova_rezervacija.html', nova_rezervacija=nova_rezervacija)
+@get('/rezervacija/nova/lokacija')
+def izbira_lokacije():
+    cur.execute("""
+        SELECT id, ime
+        FROM lokacija
+        ORDER BY id
+    """)
+    lokacija = cur.fetchall()
+    return template('izbira_lokacije.html',lokacija=lokacija)
 
-@post('/rezervacija/nova')
+
+@get('/rezervacija/nova/<id>')
+def nova_rezervacija(id):
+    cur.execute("""
+    SELECT lokacija.id, lokacija.ime FROM lokacija
+    INNER JOIN soba ON soba.lokacija = lokacija.id
+    INNER JOIN rezervacija ON rezervirana_soba = soba.id
+    WHERE lokacija = %s
+    """,
+    (id, ))
+    rezervacija = cur.fetchall()
+    cur.execute("""
+    SELECT id, velikost, lokacija, cena
+    FROM soba
+    WHERE lokacija = %s
+    """,
+    (id, ))
+    soba = cur.fetchall()
+    cur.execute("""
+        SELECT id, ime, cena
+        FROM zajtrk
+        ORDER BY id
+    """)
+    zajtrki = cur.fetchall()
+    return template('nova_rezervacija.html', nova_rezervacija=nova_rezervacija,zajtrki=zajtrki,rezervacija=rezervacija,soba=soba)
+
+@post('/rezervacija/nova<id>')
 def dodaj_rezervacijo():
     id = request.forms.id
     rezervirana_soba = request.forms.rezervirana_soba
@@ -174,7 +206,7 @@ def dodaj_rezervacijo():
     cur.execute("INSERT INTO rezervacija (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, geslo) VALUES (%s, %s, %s, %s, %s, %s)",
                     (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, geslo))
     conn.commit()
-    redirect('/rezervacija/nova')
+    redirect('/rezervacija/nova<id>')
 
 # poizvedba, ki uporabniku vrne le njegovo rezervacijo
 @get('/rezervacija/pregled/<id_rezervacije>')

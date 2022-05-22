@@ -1,0 +1,14 @@
+% setdefault('napaka', '')
+% rebase('base.html', naslov='Izbira lokacije', napaka=napaka)
+
+<table id="izpis" cellpadding="0" cellspacing="0" border="1">
+    %for (id, lokacija) in lokacija:
+    <tr>
+        <td>
+            <form action="/rezervacija/nova/{{id}}" method="get">
+                <input value="{{lokacija}}" type="submit" />
+            </form>
+        </td>
+    </tr>
+    %end  
+</table>
