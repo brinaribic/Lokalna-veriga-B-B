@@ -3,6 +3,9 @@ import auth_public as auth
 import psycopg2, psycopg2.extensions, psycopg2.extras
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo problemov s sumniki
 
+import os
+import hashlib
+
 napakaSporocilo = None
 # funkcija za brisanje in nastavljanje sporočila ob morebitnem pojavu napake
 def nastaviSporocilo(sporocilo = None):
@@ -26,6 +29,13 @@ def static(filename):
 # Odkomentiraj, če želiš sporočila o napakah
 debug(True)
 
+skrivnost = "k1094107c907cw982982c42"
+
+def hashGesla(s):
+    m = hashlib.sha256()
+    m.update(s.encode("utf-8"))
+    return m.hexdigest()
+
 
 @get('/')
 def index():
@@ -37,7 +47,33 @@ def izbira_uporabnika():
     napaka = nastaviSporocilo(None)
     return template('izbira_uporabnika.html', izbira_uporabnika=izbira_uporabnika, napaka=napaka)
 
-#@get('/zaposleni/prijava')
+
+@get('/zaposleni/prijava') 
+def prijava_get():
+    napaka = nastaviSporocilo()
+    return template("prijava_zaposleni.html", napaka=napaka)
+
+
+@post('/zaposleni/prijava') 
+def prijava_post():
+    emso = request.forms.get('emso')
+    geslo = request.forms.get('geslo')
+    if emso is None or geslo is None:
+        nastaviSporocilo('Izpolniti morate vsa okenca.') 
+        redirect('/zaposleni/prijava')
+    hashBaza = None
+    try: 
+        cur.execute("SELECT geslo FROM zaposleni WHERE emso = %s", [emso])
+        hashBaza = cur.fetchall()[0]
+    except:
+        hashBaza = None
+    if hashBaza is None:
+        nastaviSporocilo('Prijava ni mogoča.') 
+        redirect('/zaposleni/prijava')
+    if hashGesla(geslo) != hashBaza:
+        nastaviSporocilo('Prijava ni mogoča.') 
+        redirect('/zaposleni/prijava')
+    redirect('/zaposleni/izbira')
 
 
 # Kaj si želimo ogledati/potencialno spremeniti kot zaposleni:
@@ -157,7 +193,32 @@ def uredi_zajtrk_post(id):
     conn.commit()
     redirect('/zaposleni/zajtrki')
 
-#@get('/rezervacija/prijava')
+@get('/rezervacija/prijava')
+def rezervacija_prijava_get():
+    napaka = nastaviSporocilo()
+    return template("prijava_rezervacija.html", napaka=napaka)
+
+@post('/rezervacija/prijava') 
+def rezervacija_prijava_post():
+    id = request.forms.get('id')
+    geslo = request.forms.get('geslo')
+    hashBaza = None
+    try: 
+        cur.execute("SELECT geslo FROM rezervacija WHERE id = %s", [id])
+        hashBaza = cur.fetchall()[0][0]
+    except:
+        hashBaza = None
+    if hashBaza is None:
+        nastaviSporocilo('Prijava ni mogoča.') 
+        redirect('/rezervacija/prijava')
+        return
+    if hashGesla(geslo) != hashBaza:
+        nastaviSporocilo('Nekaj je šlo narobe.') 
+        redirect('/rezervacija/prijava')
+        return
+    redirect(f'/rezervacija/pregled/{id}')
+
+
 
 @get('/rezervacija/nova/lokacija')
 def izbira_lokacije():
@@ -169,23 +230,22 @@ def izbira_lokacije():
     lokacija = cur.fetchall()
     return template('izbira_lokacije.html',lokacija=lokacija)
 
-
-@get('/rezervacija/nova/<id>')
-def nova_rezervacija(id):
+@get('/rezervacija/nova/<id_lokacije>')
+def nova_rezervacija(id_lokacije):
     cur.execute("""
     SELECT lokacija.id, lokacija.ime FROM lokacija
     INNER JOIN soba ON soba.lokacija = lokacija.id
     INNER JOIN rezervacija ON rezervirana_soba = soba.id
     WHERE lokacija = %s
     """,
-    (id, ))
+    (id_lokacije, ))
     rezervacija = cur.fetchall()
     cur.execute("""
     SELECT id, velikost, lokacija, cena
     FROM soba
     WHERE lokacija = %s
     """,
-    (id, ))
+    (id_lokacije, ))
     soba = cur.fetchall()
     cur.execute("""
         SELECT id, ime, cena
@@ -193,28 +253,31 @@ def nova_rezervacija(id):
         ORDER BY id
     """)
     zajtrki = cur.fetchall()
-    return template('nova_rezervacija.html', nova_rezervacija=nova_rezervacija,zajtrki=zajtrki,rezervacija=rezervacija,soba=soba)
+    return template('nova_rezervacija.html', nova_rezervacija=nova_rezervacija, zajtrki=zajtrki, rezervacija=rezervacija, soba=soba)
 
-@post('/rezervacija/nova<id>')
-def dodaj_rezervacijo():
-    id = request.forms.id
+
+@post('/rezervacija/nova/<id_lokacije>')
+def dodaj_rezervacijo(id_lokacije):
+    cur.execute("SELECT MAX(id) FROM rezervacija")
+    id = cur.fetchall()[0][0] + 1 
     rezervirana_soba = request.forms.rezervirana_soba
     pricetek_bivanja = request.forms.pricetek_bivanja
     stevilo_nocitev = request.forms.stevilo_nocitev
     vkljucuje = request.forms.vkljucuje
     geslo = request.forms.geslo
+    zgostitev = hashGesla(geslo)
     cur.execute("INSERT INTO rezervacija (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, geslo) VALUES (%s, %s, %s, %s, %s, %s)",
-                    (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, geslo))
+                    (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, zgostitev))
     conn.commit()
-    redirect('/rezervacija/nova<id>')
+    redirect(f'/rezervacija/pregled/{id}')
+
 
 # poizvedba, ki uporabniku vrne le njegovo rezervacijo
 @get('/rezervacija/pregled/<id_rezervacije>')
 def pregled_rezervacije(id_rezervacije):
     cur.execute("SELECT * FROM rezervacija WHERE id = %s", (id_rezervacije, ))
     rezervacija = cur.fetchall()
-    return template('obstojeca_rezervacija.html', rezervacija=rezervacija)
-
+    return template('pregled_rezervacija.html', rezervacija=rezervacija)
 
 
 

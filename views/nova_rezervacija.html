@@ -4,15 +4,20 @@
     <form action="/rezervacija/nova/{{id}}" method="post">
     <span>Soba:</span><select name="rezervirana_soba" type="text">
         %for (id, velikost, lokacija, cena) in soba:
-        <option>{{velikost}}, {{cena}} €</option>
+        <option value="{{id}}">{{velikost}}, {{cena}} €</option>
         %end
     </select>
     <span>Datum:</span><input name="pricetek_bivanja" type="date"/>
     <span>Število nočitev:</span><input name="stevilo_nocitev" type="number"/>
     <span>Zajtrk:</span><select name="vkljucuje" type="text"> 
-        %for (id, ime,cena) in zajtrki:
-        <option>{{ime}}</option>
+        %for (id, ime, cena) in zajtrki:
+        <option value="{{id}}">{{ime}}</option>
         %end
     </select>
+    <label for="geslo">Geslo:</label>
+    <input id="geslo" name="geslo" type="text" required
+    oninput="this.setCustomValidity('')"
+    oninvalid="this.setCustomValidity('Obvezno polje')"
+    />
     <input value="Dodaj" type="submit"/>
 </form>
