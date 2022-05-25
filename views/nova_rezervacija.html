@@ -7,11 +7,15 @@
         <option value="{{id}}">{{velikost}}, {{cena}} €</option>
         %end
     </select>
-    <span>Datum:</span><input name="pricetek_bivanja" type="date"/>
-    <span>Število nočitev:</span><input name="stevilo_nocitev" type="number"/>
+    <span>Datum:</span><input name="pricetek_bivanja" type="date" required 
+    oninput="this.setCustomValidity('')"
+    oninvalid="this.setCustomValidity('Obvezno polje')"/>
+    <span>Število nočitev:</span><input name="stevilo_nocitev" type="number" required
+    oninput="this.setCustomValidity('')"
+    oninvalid="this.setCustomValidity('Obvezno polje')"/>
     <span>Zajtrk:</span><select name="vkljucuje" type="text"> 
-        %for (id, ime, cena) in zajtrki:
-        <option value="{{id}}">{{ime}}</option>
+        %for (id, ime, cena_zajtrk) in zajtrki:
+        <option value="{{id}}">{{ime}}, {{cena_zajtrk}} €</option>
         %end
     </select>
     <label for="geslo">Geslo:</label>

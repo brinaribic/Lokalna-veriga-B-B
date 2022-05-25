@@ -1,0 +1,10 @@
+% setdefault('napaka', '')
+% rebase('base.html', naslov='Zaključek rezervacije', napaka=napaka)
+
+<div class="zakljucek">
+<p>Uspešno ste zaključili rezervacijo!</p>
+</div>
+Urejanje rezervacije:
+<form action="/rezervacija/pregled/{{id}}" method="get">
+    <input value="Uredi" type="submit" />
+</form>

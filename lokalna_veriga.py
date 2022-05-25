@@ -5,6 +5,7 @@ psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo prob
 
 import os
 import hashlib
+import datetime
 
 napakaSporocilo = None
 # funkcija za brisanje in nastavljanje sporočila ob morebitnem pojavu napake
@@ -269,13 +270,21 @@ def dodaj_rezervacijo(id_lokacije):
     cur.execute("INSERT INTO rezervacija (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, geslo) VALUES (%s, %s, %s, %s, %s, %s)",
                     (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, zgostitev))
     conn.commit()
-    redirect(f'/rezervacija/pregled/{id}')
+    redirect(f'/rezervacija/zakljucek/{id}')
+
+@get('/rezervacija/zakljucek/<id>')
+def konec_rezervacije(id):
+    id=id
+    #konec_bivanja = datetime(pricetek_bivanja) + datetime.timedelta(stevilo_nocitev)
+    # dodaj se celotno placilo 
+    return template('rezervacija_konec.html',id=id)
 
 
 # poizvedba, ki uporabniku vrne le njegovo rezervacijo
-@get('/rezervacija/pregled/<id_rezervacije>')
-def pregled_rezervacije(id_rezervacije):
-    cur.execute("SELECT * FROM rezervacija WHERE id = %s", (id_rezervacije, ))
+@get('/rezervacija/pregled/<id>')
+def pregled_rezervacije(id):
+    cur.execute("SELECT id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje FROM rezervacija WHERE id = %s", 
+    (id, ))
     rezervacija = cur.fetchall()
     return template('pregled_rezervacija.html', rezervacija=rezervacija)
 
