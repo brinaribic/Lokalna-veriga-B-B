@@ -26,3 +26,13 @@ body {
     line-height: 1.5rem;
     margin-left: 0.25rem;
 }
+
+.zakljucek {
+    color: blueviolet;
+    font-size: large;
+}
+
+h2 {
+    color: rgb(226, 43, 165);
+    font-size: large;
+}
