@@ -275,9 +275,16 @@ def dodaj_rezervacijo(id_lokacije):
 @get('/rezervacija/zakljucek/<id>')
 def konec_rezervacije(id):
     id=id
-    #konec_bivanja = datetime(pricetek_bivanja) + datetime.timedelta(stevilo_nocitev)
+    cur.execute("SELECT id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje FROM rezervacija WHERE id = %s", 
+    (id, ))
+    rezervacija = cur.fetchall()
+    print(rezervacija[0][2])
+    stevilo_nocitev = datetime.timedelta(rezervacija[0][3])
+    pricetek_bivanja = datetime.datetime.strptime(str(rezervacija[0][2]), "%Y-%m-%d")
+    konec_bivanja = stevilo_nocitev + pricetek_bivanja
+    konec_bivanja = konec_bivanja.date()
     # dodaj se celotno placilo 
-    return template('rezervacija_konec.html',id=id)
+    return template('rezervacija_konec.html',id=id,rezervacija=rezervacija,konec_bivanja=konec_bivanja, pricetek_bivanja=pricetek_bivanja)
 
 
 # poizvedba, ki uporabniku vrne le njegovo rezervacijo

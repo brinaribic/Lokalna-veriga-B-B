@@ -4,7 +4,8 @@
 <div class="zakljucek">
 <p>Uspešno ste zaključili rezervacijo!</p>
 </div>
-Urejanje rezervacije:
+<p>Številka vaše rezervacije je <strong>{{id}}</strong>.</p>
 <form action="/rezervacija/pregled/{{id}}" method="get">
-    <input value="Uredi" type="submit" />
+    <input value="Ogled rezervacije" type="submit" />
 </form>
+<p>Vaše bivanje pri nas se zaključi {{konec_bivanja}}.</p>
