@@ -2,30 +2,67 @@
 % rebase('base.html', naslov='Dodajanje rezervacije', napaka=napaka)
 
 <form action="/rezervacija/nova/{{id}}" method="post">
-    <span>Soba:</span>
-    <select name="rezervirana_soba" type="text">
-        %for (id, velikost, lokacija, cena) in soba:
-        <option value="{{id}}">{{velikost}}, {{cena}} €</option>
-        %end
-    </select>
-    <span>Datum:</span>
-    <input name="pricetek_bivanja" type="date" required 
-        oninput="this.setCustomValidity('')"
-        oninvalid="this.setCustomValidity('Obvezno polje')"/>
-    <span>Število nočitev:</span>
-    <input name="stevilo_nocitev" type="number" required
-        oninput="this.setCustomValidity('')"
-        oninvalid="this.setCustomValidity('Obvezno polje')"/>
-    <span>Zajtrk:</span>
-    <select name="vkljucuje" type="text"> 
-        %for (id, ime, cena_zajtrk) in zajtrki:
-        <option value="{{id}}">{{ime}}, {{cena_zajtrk}} €</option>
-        %end
-    </select>
-    <label for="geslo">Geslo:</label>
-    <input id="geslo" name="geslo" type="password" required
-        oninput="this.setCustomValidity('')"
-        oninvalid="this.setCustomValidity('Obvezno polje')"
-    />
-    <input value="Dodaj" type="submit"/>
+    <table cellpadding="0" cellspacing="0" border="0"  class="edit-celica">
+        <tr>
+            <td><span>Soba:</span></td>
+            <td>
+                <select name="rezervirana_soba" type="text">
+                    %for (id, velikost, lokacija, cena) in soba:
+                    <option value="{{id}}">{{velikost}}, {{cena}} €</option>
+                    %end
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><span>Datum:</span></td>
+            <td>
+                <input name="pricetek_bivanja" type="date" required 
+                    oninput="preveriPolje(this)"
+                    oninvalid="preveriPolje(this)"/>
+            </td>
+        </tr>
+        <tr>
+            <td><span>Število nočitev:</span></td>
+            <td>
+                <input name="stevilo_nocitev" type="number" step="1" required
+                    oninput="preveriPolje(this)"
+                    oninvalid="preveriPolje(this)"/>
+            </td>
+        </tr>
+        <tr>
+            <td><span>Zajtrk:</span></td>
+            <td>
+                <select name="vkljucuje" type="text" value=""> 
+                    %for (id, ime, cena_zajtrk) in zajtrki:
+                    <option value="{{id}}">{{ime}}, {{cena_zajtrk}} €</option>
+                    %end
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="geslo">Geslo:</label></td>
+            <td>
+                <input id="geslo" name="geslo" type="password" required
+                    oninput="preveriPolje(this)"
+                    oninvalid="preveriPolje(this)"
+                />
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input value="Oddaj novo rezervacijo!" type="submit"/></td>
+        </tr>
+    </table>
 </form>
+
+<script>
+    function preveriPolje(polje) {
+        if(polje.validity.valueMissing) {
+            polje.setCustomValidity('Obvezno polje')
+        } else if(polje.validity.stepMismatch) {
+            polje.setCustomValidity('Vnesti morate celo število')
+        } else {
+            polje.setCustomValidity('')
+        }
+    }
+</script>

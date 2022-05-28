@@ -2,12 +2,15 @@
 % rebase('base.html', naslov='Zaključek rezervacije', napaka=napaka)
 
 <div class="zakljucek">
-<p>Uspešno ste zaključili rezervacijo!</p>
+    <p>Uspešno ste zaključili rezervacijo!</p>
 </div>
+
 <p>Številka vaše rezervacije je <strong>{{id}}</strong>.</p>
+
 <form action="/rezervacija/pregled/{{id}}" method="get">
     <input value="Ogled rezervacije" type="submit" />
 </form>
+
 <p>Vaše bivanje pri nas se zaključi {{konec_bivanja}}.</p>
 
 <form action="/izbira_uporabnika" method="get">
