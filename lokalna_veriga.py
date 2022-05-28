@@ -262,7 +262,7 @@ def dodaj_rezervacijo(id_lokacije):
 @get('/rezervacija/zakljucek/<id>')
 def konec_rezervacije(id):
     id=id
-    cur.execute("SELECT id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje FROM rezervacija WHERE id = %s", 
+    cur.execute("SELECT id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje FROM rezervacija WHERE id = %s", 
     (id, ))
     rezervacija = cur.fetchall()
     stevilo_nocitev = datetime.timedelta(rezervacija[0][3])
@@ -276,7 +276,12 @@ def konec_rezervacije(id):
 # poizvedba, ki uporabniku vrne le njegovo rezervacijo
 @get('/rezervacija/pregled/<id>')
 def pregled_rezervacije(id):
-    cur.execute("SELECT id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje FROM rezervacija WHERE id = %s", 
+    cur.execute(""" 
+                SELECT rezervacija.id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime
+                FROM rezervacija 
+                INNER JOIN zajtrk ON rezervacija.vkljucuje = zajtrk.id 
+                WHERE rezervacija.id = %s
+                """, 
     (id, ))
     rezervacija = cur.fetchall()
     stevilo_nocitev = datetime.timedelta(rezervacija[0][3])

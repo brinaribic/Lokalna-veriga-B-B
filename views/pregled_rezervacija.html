@@ -1,6 +1,7 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Obstoječa rezervacija', napaka=napaka)
 
+% include('orodna_vrstica.html', povezava='', napis='', stolpci='[0,1,2,3,4]')
 
     <table id="izpis" cellpadding="0" cellspacing="0" border="1">
     <tr>
@@ -9,16 +10,16 @@
         <th>Pričetek bivanja</th>
         <th>Število nočitev</th>
         <th>Zajtrk</th>
-        <th>Konec bivanja</th>
+        <!-- vključi: Konec bivanja -->
     </tr>
-    %for (id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje) in rezervacija:
+    %for (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime) in rezervacija:
         <tr>
             <td>{{id}}</td>
             <td>{{rezervirana_soba}}</td>
             <td>{{pricetek_bivanja}}</td>
             <td>{{stevilo_nocitev}}</td>
-            <td>{{vkljucuje}}</td>
-            <td>{{konec_bivanja}}</td>
+            <td>{{ime}}</td>
+            <!-- vključi: Konec bivanja -->
         </tr>
     %end
     </table>
