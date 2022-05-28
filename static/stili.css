@@ -36,3 +36,26 @@ h2 {
     color: rgb(226, 43, 165);
     font-size: large;
 }
+
+.akcije {
+    display: flex;
+}
+
+.akcija {
+    margin: 0.25rem;
+}
+
+#izpis td {
+    padding: 0.25rem;
+    border: 0;
+}
+
+#izpis th {
+    padding: 0.25rem;
+    border: 0;
+    text-align: left;
+}
+
+#izpis {
+    border: 0;
+}

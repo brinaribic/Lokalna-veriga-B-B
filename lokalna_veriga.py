@@ -198,13 +198,13 @@ def rezervacija_prijava_post():
         hashBaza = None
     if hashBaza is None:
         napaka = nastaviSporocilo('Prijava ni mogoča.') 
-        redirect('/rezervacija/prijava', napaka=napaka)
+        redirect('/rezervacija/prijava')
         return
     if hashGesla(geslo) != hashBaza:
         napaka = nastaviSporocilo('Nekaj je šlo narobe.') 
-        redirect('/rezervacija/prijava', napaka=napaka)
+        redirect('/rezervacija/prijava')
         return
-    redirect(f'/rezervacija/pregled/{id}', napaka=napaka)
+    redirect(f'/rezervacija/pregled/{id}')
 
 
 
