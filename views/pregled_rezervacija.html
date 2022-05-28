@@ -9,6 +9,7 @@
         <th>Pričetek bivanja</th>
         <th>Število nočitev</th>
         <th>Zajtrk</th>
+        <th>Konec bivanja</th>
     </tr>
     %for (id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje) in rezervacija:
         <tr>
@@ -17,7 +18,7 @@
             <td>{{pricetek_bivanja}}</td>
             <td>{{stevilo_nocitev}}</td>
             <td>{{vkljucuje}}</td>
+            <td>{{konec_bivanja}}</td>
         </tr>
     %end
     </table>
-

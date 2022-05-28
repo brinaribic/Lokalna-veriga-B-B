@@ -54,25 +54,12 @@ def prijava_get():
     napaka = nastaviSporocilo()
     return template("prijava_zaposleni.html", napaka=napaka)
 
-
 @post('/zaposleni/prijava') 
 def prijava_post():
     emso = request.forms.get('emso')
     geslo = request.forms.get('geslo')
     if emso is None or geslo is None:
         nastaviSporocilo('Izpolniti morate vsa okenca.') 
-        redirect('/zaposleni/prijava')
-    hashBaza = None
-    try: 
-        cur.execute("SELECT geslo FROM zaposleni WHERE emso = %s", [emso])
-        hashBaza = cur.fetchall()[0]
-    except:
-        hashBaza = None
-    if hashBaza is None:
-        nastaviSporocilo('Prijava ni mogoča.') 
-        redirect('/zaposleni/prijava')
-    if hashGesla(geslo) != hashBaza:
-        nastaviSporocilo('Prijava ni mogoča.') 
         redirect('/zaposleni/prijava')
     redirect('/zaposleni/izbira')
 
@@ -278,7 +265,6 @@ def konec_rezervacije(id):
     cur.execute("SELECT id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje FROM rezervacija WHERE id = %s", 
     (id, ))
     rezervacija = cur.fetchall()
-    print(rezervacija[0][2])
     stevilo_nocitev = datetime.timedelta(rezervacija[0][3])
     pricetek_bivanja = datetime.datetime.strptime(str(rezervacija[0][2]), "%Y-%m-%d")
     konec_bivanja = stevilo_nocitev + pricetek_bivanja
@@ -293,7 +279,11 @@ def pregled_rezervacije(id):
     cur.execute("SELECT id,rezervirana_soba,pricetek_bivanja,stevilo_nocitev,vkljucuje FROM rezervacija WHERE id = %s", 
     (id, ))
     rezervacija = cur.fetchall()
-    return template('pregled_rezervacija.html', rezervacija=rezervacija)
+    stevilo_nocitev = datetime.timedelta(rezervacija[0][3])
+    pricetek_bivanja = datetime.datetime.strptime(str(rezervacija[0][2]), "%Y-%m-%d")
+    konec_bivanja = stevilo_nocitev + pricetek_bivanja
+    konec_bivanja = konec_bivanja.date()
+    return template('pregled_rezervacija.html', rezervacija=rezervacija,konec_bivanja=konec_bivanja)
 
 
 
