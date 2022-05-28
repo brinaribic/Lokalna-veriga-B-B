@@ -1,8 +1,9 @@
 % setdefault('napaka', '')
-% rebase('base.html', naslov='Urejanje obstoječe rezervacije', napaka=napaka)
+% setdefault('naslov', 'Urejanje obstoječe rezervacije')
+% rebase('base.html', naslov=naslov, napaka=napaka)
 
 <form action="/rezervacija/pregled/{{rezervacija[0]}}/uredi" method="post">
-    <table cellpadding="0" cellspacing="0" border="0">
+    <table cellpadding="0" cellspacing="0" border="0"  class="edit-celica">
         <tr>
             <td><span>Id:</span></td>
             <td>{{rezervacija[0]}}</td>
@@ -15,8 +16,8 @@
             <td><span>Pričetek bivanja:</span></td>
             <td>
                 <input name="pricetek_bivanja" type="date" value="{{rezervacija[2]}}" required 
-                    oninput="this.setCustomValidity('')"
-                    oninvalid="this.setCustomValidity('Obvezno polje')"/>
+                    oninput="preveriPolje(this)"
+                    oninvalid="preveriPolje(this)"/>
             </td>
         </tr>
         <tr>
@@ -45,3 +46,15 @@
         </tr>
     </table>
 </form>
+
+<script>
+    function preveriPolje(polje) {
+        if(polje.validity.valueMissing) {
+            polje.setCustomValidity('Obvezno polje')
+        } else if(polje.validity.typeMismatch) {
+            polje.setCustomValidity('Vnesti morate število')
+        } else {
+            polje.setCustomValidity('')
+        }
+    }
+</script>

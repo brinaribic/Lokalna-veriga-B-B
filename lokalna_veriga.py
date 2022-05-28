@@ -63,6 +63,9 @@ def prijava_post():
         redirect('/zaposleni/prijava')
     redirect('/zaposleni/izbira')
 
+#################################################################
+### Možnosti pregleda za zaposlene
+#################################################################
 
 # Kaj si želimo ogledati/potencialno spremeniti kot zaposleni:
 @get('/zaposleni/izbira')
@@ -72,7 +75,9 @@ def izbira_pregleda():
 @get('/zaposleni/rezervacije')
 def pregled_vseh_rezervacij():
     cur.execute("""
-        SELECT id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje FROM rezervacija
+        SELECT rezervacija.id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime
+        FROM rezervacija 
+        INNER JOIN zajtrk ON rezervacija.vkljucuje = zajtrk.id 
         ORDER BY pricetek_bivanja
     """)
     rezervacija = cur.fetchall()
@@ -87,35 +92,6 @@ def pregled_osebja():
     """)
     osebje = cur.fetchall()
     return template('pregled_zaposleni.html', osebje=osebje, napaka=napaka)
-
-# dodajanje zaposlenih - dostop do ustreznega okna in potrditev izpolnjenega obrazca
-@get('/zaposleni/osebje/dodaj')
-def dodaj_zaposlenega_get():
-    return template('zaposleni_uredi.html')
-
-@post('/zaposleni/osebje/dodaj')
-def dodaj_zaposlenega():
-    emso = request.forms.emso
-    ime = request.forms.ime
-    priimek = request.forms.priimek
-    cur.execute("INSERT INTO zaposleni (emso, ime, priimek) VALUES (%s, %s, %s)", (emso, ime, priimek))
-    conn.commit()
-    redirect('/zaposleni/osebje')
-
-# urejanje osebja
-@get('/zaposleni/osebje/uredi/<emso>')
-def uredi_zaposlenega_get(emso):
-    cur.execute("SELECT emso, ime, priimek FROM zaposleni WHERE emso = %s", (emso, ))
-    zaposleni = cur.fetchone()
-    return template('zaposleni_uredi.html', zaposleni=zaposleni)
-
-@post('/zaposleni/osebje/uredi/<emso>')
-def uredi_zaposlenega_post(emso):
-    ime = request.forms.ime
-    priimek = request.forms.priimek
-    cur.execute("UPDATE zaposleni SET ime = %s, priimek = %s WHERE emso = %s", (ime, priimek, emso))
-    conn.commit()
-    redirect('/zaposleni/osebje')
 
 @get('/zaposleni/lokacije')
 def pregled_lokacij():
@@ -152,6 +128,43 @@ def pregled_zajtrkov():
     zajtrki = cur.fetchall()
     return template('pregled_zajtrkov.html', zajtrki=zajtrki, napaka=napaka)
 
+#################################################################
+### Urejanje osebja
+#################################################################
+
+# dodajanje zaposlenih - dostop do ustreznega okna in potrditev izpolnjenega obrazca
+@get('/zaposleni/osebje/dodaj')
+def dodaj_zaposlenega_get():
+    return template('zaposleni_uredi.html')
+
+@post('/zaposleni/osebje/dodaj')
+def dodaj_zaposlenega():
+    emso = request.forms.emso
+    ime = request.forms.ime
+    priimek = request.forms.priimek
+    cur.execute("INSERT INTO zaposleni (emso, ime, priimek) VALUES (%s, %s, %s)", (emso, ime, priimek))
+    conn.commit()
+    redirect('/zaposleni/osebje')
+
+# urejanje osebja
+@get('/zaposleni/osebje/uredi/<emso>')
+def uredi_zaposlenega_get(emso):
+    cur.execute("SELECT emso, ime, priimek FROM zaposleni WHERE emso = %s", (emso, ))
+    zaposleni = cur.fetchone()
+    return template('zaposleni_uredi.html', zaposleni=zaposleni, naslov="Uredi zaposlenega")
+
+@post('/zaposleni/osebje/uredi/<emso>')
+def uredi_zaposlenega_post(emso):
+    ime = request.forms.ime
+    priimek = request.forms.priimek
+    cur.execute("UPDATE zaposleni SET ime = %s, priimek = %s WHERE emso = %s", (ime, priimek, emso))
+    conn.commit()
+    redirect('/zaposleni/osebje')
+
+#################################################################
+### Urejanje zajtrkov
+#################################################################
+
 # dodajanje zajtrkov
 @get('/zaposleni/zajtrki/dodaj')
 def dodaj_zajtrk_get():
@@ -171,7 +184,7 @@ def dodaj_zajtrk():
 def uredi_zajtrk_get(id):
     cur.execute("SELECT id, ime, cena FROM zajtrk WHERE id = %s", (id, ))
     zajtrk = cur.fetchone()
-    return template('zajtrk_uredi.html', zajtrk=zajtrk)
+    return template('zajtrk_uredi.html', zajtrk=zajtrk, naslov="Uredi zajtrk")
 
 @post('/zaposleni/zajtrki/uredi/<id>')
 def uredi_zajtrk_post(id):
@@ -180,6 +193,10 @@ def uredi_zajtrk_post(id):
     cur.execute("UPDATE zajtrk SET ime = %s, cena = %s WHERE id = %s", (ime, cena, id))
     conn.commit()
     redirect('/zaposleni/zajtrki')
+
+#################################################################
+### Rezervacija
+#################################################################
 
 @get('/rezervacija/prijava')
 def rezervacija_prijava_get():
@@ -197,17 +214,16 @@ def rezervacija_prijava_post():
     except:
         hashBaza = None
     if hashBaza is None:
-        napaka = nastaviSporocilo('Prijava ni mogoča.') 
+        nastaviSporocilo('Prijava ni mogoča.') 
         redirect('/rezervacija/prijava')
         return
     if hashGesla(geslo) != hashBaza:
-        napaka = nastaviSporocilo('Nekaj je šlo narobe.') 
+        nastaviSporocilo('Nekaj je šlo narobe.') 
         redirect('/rezervacija/prijava')
         return
     redirect(f'/rezervacija/pregled/{id}')
 
-
-
+# nova rezervacija
 @get('/rezervacija/nova/lokacija')
 def izbira_lokacije():
     cur.execute("""
@@ -242,7 +258,6 @@ def nova_rezervacija(id_lokacije):
     """)
     zajtrki = cur.fetchall()
     return template('nova_rezervacija.html', nova_rezervacija=nova_rezervacija, zajtrki=zajtrki, rezervacija=rezervacija, soba=soba)
-
 
 @post('/rezervacija/nova/<id_lokacije>')
 def dodaj_rezervacijo(id_lokacije):
@@ -288,7 +303,7 @@ def pregled_rezervacije(id):
     pricetek_bivanja = datetime.datetime.strptime(str(rezervacija[0][2]), "%Y-%m-%d")
     konec_bivanja = stevilo_nocitev + pricetek_bivanja
     konec_bivanja = konec_bivanja.date()
-    return template('pregled_rezervacija.html', rezervacija=rezervacija, konec_bivanja=konec_bivanja)
+    return template('pregled_obstojeca_rezervacija.html', rezervacija=rezervacija, konec_bivanja=konec_bivanja)
 
 # urejanje obstoječe rezervacije
 @get('/rezervacija/pregled/<id>/uredi')
@@ -307,7 +322,7 @@ def uredi_rezervacijo_get(id):
         ORDER BY id
     """)
     zajtrki = cur.fetchall()
-    return template('rezervacija_uredi.html', rezervacija=rezervacija, zajtrki=zajtrki)
+    return template('rezervacija_uredi.html', rezervacija=rezervacija, zajtrki=zajtrki, naslov="Uredi svojo rezervacijo")
 
 @post('/rezervacija/pregled/<id>/uredi')
 def uredi_rezervacija_post(id):
@@ -318,9 +333,13 @@ def uredi_rezervacija_post(id):
     conn.commit()
     redirect(f'/rezervacija/zakljucek/{id}')
 
+# brisanje rezervacije
 @post('/rezervacija/pregled/<id>/brisi')
 def brisi_rezervacijo_post(id):
-    cur.execute("DELETE FROM rezervacija WHERE id = %s", (id, ))
+    try:
+        cur.execute("DELETE FROM rezervacija WHERE id = %s", (id, ))
+    except:
+        nastaviSporocilo('Brisanje rezervacije z id-jem {0} ni bilo uspešno.'.format(id)) 
     conn.commit()
     return template('rezervacija_izbris.html')
 

@@ -1,12 +1,13 @@
 % setdefault('napaka', '')
-% rebase('base.html', naslov='Dodajanje novega zajtrka', napaka=napaka)
+% setdefault('naslov', 'Dodajanje novega zajtrka')
+% rebase('base.html', naslov=naslov, napaka=napaka)
 
 % if defined('zajtrk'):
 <form action="/zaposleni/zajtrki/uredi/{{zajtrk[0]}}" method="post">
 % else:
 <form action="/zaposleni/zajtrki/dodaj" method="post">
 % end
-    <table cellpadding="0" cellspacing="0" border="0">
+    <table cellpadding="0" cellspacing="0" border="0" class="edit-celica">
         <tr>
             <td>
                 <span>Id:</span> 
@@ -16,8 +17,8 @@
                     {{zajtrk[0]}}
                 % else:
                 <input name="id" type="number" required
-                oninput="this.setCustomValidity('')"
-                oninvalid="this.setCustomValidity('Obvezno polje')" 
+                oninput="preveriPolje(this)"
+                oninvalid="preveriPolje(this)" 
                 />  
                 % end
             </td>
@@ -31,8 +32,8 @@
                 <input name="ime" type="text" value="{{zajtrk[1]}}" />
                 % else:
                 <input name="ime" type="text" required
-                oninput="this.setCustomValidity('')"
-                oninvalid="this.setCustomValidity('Obvezno polje')" 
+                oninput="preveriPolje(this)"
+                oninvalid="preveriPolje(this)" 
                 />
                 % end
             </td>
@@ -45,9 +46,9 @@
                 % if defined('zajtrk'):
                 <input name="cena" type="text" value="{{zajtrk[2]}}" />
                 % else:
-                <input name="cena" type="number" required
-                oninput="this.setCustomValidity('')"
-                oninvalid="this.setCustomValidity('Obvezno polje')" 
+                <input name="cena" type="number" step="0.01" required
+                oninput="preveriPolje(this)"
+                oninvalid="preveriPolje(this)" 
                 />
                 % end
             </td>
@@ -65,5 +66,18 @@
             </td>
         </tr>
     </table>
-    
 </form>
+
+<script>
+    function preveriPolje(polje) {
+        if(polje.validity.valueMissing) {
+            polje.setCustomValidity('Obvezno polje')
+        } else if(polje.validity.typeMismatch) {
+            polje.setCustomValidity('Vnesti morate število')
+        } else if(polje.validity.stepMismatch) {
+            polje.setCustomValidity('Cena je lahko zaokrožena na največ dve decimalki')
+        } else {
+            polje.setCustomValidity('')
+        }
+    }
+</script>
