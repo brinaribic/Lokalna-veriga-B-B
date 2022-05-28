@@ -1,0 +1,47 @@
+% setdefault('napaka', '')
+% rebase('base.html', naslov='Urejanje obstoječe rezervacije', napaka=napaka)
+
+<form action="/rezervacija/pregled/{{rezervacija[0]}}/uredi" method="post">
+    <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td><span>Id:</span></td>
+            <td>{{rezervacija[0]}}</td>
+        </tr>
+        <tr>
+            <td><span>Soba:</span></td>
+            <td>{{rezervacija[1]}}</td>
+        </tr>
+        <tr>
+            <td><span>Pričetek bivanja:</span></td>
+            <td>
+                <input name="pricetek_bivanja" type="date" value="{{rezervacija[2]}}" required 
+                    oninput="this.setCustomValidity('')"
+                    oninvalid="this.setCustomValidity('Obvezno polje')"/>
+            </td>
+        </tr>
+        <tr>
+            <td><span>Število nočitev:</span></td>
+            <td>
+                <input name="stevilo_nocitev" type="text" value="{{rezervacija[3]}}" />
+            </td>
+        </tr>
+        <tr>
+            <td><span>Vrsta zajtrka:</span></td>
+            <td>
+                <select name="ime" type="text" value="{{rezervacija[4]}}"> 
+                    %for (id, ime, cena) in zajtrki:
+                    %if ime == rezervacija[4]:
+                    <option selected value="{{id}}">{{ime}}, {{cena}} €</option>
+                    %else:
+                    <option value="{{id}}">{{ime}}, {{cena}} €</option>
+                    %end
+                    %end
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input value="Popravi" type="submit" /></td>
+        </tr>
+    </table>
+</form>

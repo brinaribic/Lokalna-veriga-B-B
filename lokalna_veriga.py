@@ -197,14 +197,14 @@ def rezervacija_prijava_post():
     except:
         hashBaza = None
     if hashBaza is None:
-        nastaviSporocilo('Prijava ni mogoča.') 
-        redirect('/rezervacija/prijava')
+        napaka = nastaviSporocilo('Prijava ni mogoča.') 
+        redirect('/rezervacija/prijava', napaka=napaka)
         return
     if hashGesla(geslo) != hashBaza:
-        nastaviSporocilo('Nekaj je šlo narobe.') 
-        redirect('/rezervacija/prijava')
+        napaka = nastaviSporocilo('Nekaj je šlo narobe.') 
+        redirect('/rezervacija/prijava', napaka=napaka)
         return
-    redirect(f'/rezervacija/pregled/{id}')
+    redirect(f'/rezervacija/pregled/{id}', napaka=napaka)
 
 
 
@@ -288,9 +288,41 @@ def pregled_rezervacije(id):
     pricetek_bivanja = datetime.datetime.strptime(str(rezervacija[0][2]), "%Y-%m-%d")
     konec_bivanja = stevilo_nocitev + pricetek_bivanja
     konec_bivanja = konec_bivanja.date()
-    return template('pregled_rezervacija.html', rezervacija=rezervacija,konec_bivanja=konec_bivanja)
+    return template('pregled_rezervacija.html', rezervacija=rezervacija, konec_bivanja=konec_bivanja)
 
+# urejanje obstoječe rezervacije
+@get('/rezervacija/pregled/<id>/uredi')
+def uredi_rezervacijo_get(id):
+    cur.execute("""
+        SELECT rezervacija.id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime
+        FROM rezervacija 
+        INNER JOIN zajtrk ON rezervacija.vkljucuje = zajtrk.id 
+        WHERE rezervacija.id = %s
+    """, 
+    (id, ))
+    rezervacija = cur.fetchone()
+    cur.execute("""
+        SELECT id, ime, cena
+        FROM zajtrk
+        ORDER BY id
+    """)
+    zajtrki = cur.fetchall()
+    return template('rezervacija_uredi.html', rezervacija=rezervacija, zajtrki=zajtrki)
 
+@post('/rezervacija/pregled/<id>/uredi')
+def uredi_rezervacija_post(id):
+    pricetek_bivanja = request.forms.pricetek_bivanja
+    stevilo_nocitev = request.forms.stevilo_nocitev
+    ime = request.forms.ime
+    cur.execute("UPDATE rezervacija SET pricetek_bivanja = %s, stevilo_nocitev = %s, vkljucuje = %s WHERE id = %s", (pricetek_bivanja, stevilo_nocitev, ime, id))
+    conn.commit()
+    redirect(f'/rezervacija/zakljucek/{id}')
+
+@post('/rezervacija/pregled/<id>/brisi')
+def brisi_rezervacijo_post(id):
+    cur.execute("DELETE FROM rezervacija WHERE id = %s", (id, ))
+    conn.commit()
+    return template('rezervacija_izbris.html')
 
 
 
