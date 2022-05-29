@@ -30,6 +30,20 @@
                     <a class="nav-link" href="{{moznosti[i]}}">{{zavihki[i]}}</a>
                     % end
                     % end
+                    % if defined('pregled'):
+                    % pregledi = ['/zaposleni/rezervacije', '/zaposleni/osebje', '/zaposleni/lokacije', '/zaposleni/zajtrki']
+                    % izbire = ['Pregled vseh obstoječih rezervacij', 'Pregled zaposlenih', 'Pregled lokacij', 'Pregled zajtrkov']
+                    <a class="nav-link dropdown-toggle active" href="{{povezava}}" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pregledi</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        % for i in range(len(pregledi)):
+                        % if pregledi[i] == pregled:
+                        <li><a class="dropdown-item active" href="{{pregled}}">{{izbira}}</a></li>
+                        % else:
+                        <li><a class="dropdown-item" href="{{pregledi[i]}}">{{izbire[i]}}</a></li>
+                        % end
+                        % end
+                        </ul>
+                    % end
                 </div>
                 </div>
             </div>
