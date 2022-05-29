@@ -54,6 +54,7 @@ def prijava_get():
     napaka = nastaviSporocilo()
     return template("prijava_zaposleni.html", napaka=napaka)
 
+# kot zaposleni se lahko prijavimo npr. z emšom 1 in geslom 1234
 @post('/zaposleni/prijava') 
 def prijava_post():
     emso = request.forms.get('emso')
@@ -61,7 +62,23 @@ def prijava_post():
     if emso is None or geslo is None:
         nastaviSporocilo('Izpolniti morate vsa okenca.') 
         redirect('/zaposleni/prijava')
+    hashBaza = None
+    try: 
+        cur.execute("SELECT geslo FROM zaposleni WHERE emso = %s", [emso])
+        hashBaza = cur.fetchall()[0][0]
+    except:
+        hashBaza = None
+    if hashBaza is None:
+        nastaviSporocilo('Prijava ni mogoča.') 
+        redirect('/zaposleni/prijava')
+        return
+    if hashGesla(geslo) != hashBaza:
+        nastaviSporocilo('Nekaj je šlo narobe.') 
+        redirect('/zaposleni/prijava')
+        return
     redirect('/zaposleni/izbira')
+
+
 
 #################################################################
 ### Možnosti pregleda za zaposlene
