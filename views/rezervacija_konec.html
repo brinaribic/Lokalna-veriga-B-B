@@ -1,18 +1,19 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Zaključek rezervacije', napaka=napaka)
 
-<div class="zakljucek">
-    <p>Uspešno ste zaključili rezervacijo!</p>
-</div>
-
-<p>Številka vaše rezervacije je <strong>{{id}}</strong>.</p>
-
-<form action="/rezervacija/pregled/{{id}}" method="get">
-    <input value="Ogled rezervacije" type="submit" />
-</form>
-
-<p>Vaše bivanje pri nas se zaključi {{konec_bivanja}}.</p>
-
-<form action="/izbira_uporabnika" method="get">
-    <input value="Začetna stran" type="submit" />
-</form>
+<table class="table table-borderless">
+    <tr><td class="zakljucek">Uspešno ste zaključili rezervacijo!</td></tr>
+    <tr><td>Številka vaše rezervacije je <strong>{{id}}</strong>.</td></tr>
+    <tr><td>Vaše bivanje pri nas se zaključi {{konec_bivanja}}.</td></tr>
+    <tr>
+        <td>
+            <form action="/rezervacija/pregled/{{id}}" method="get">
+                <a href="#" onclick="this.parentElement.submit()">Ogled
+                    rezervacije</a>
+            </form>
+            <form action="/izbira_uporabnika" method="get">
+                <a href="#" onclick="this.parentElement.submit()">Začetna stran</a>
+            </form>
+        </td>
+    </tr>
+</table>

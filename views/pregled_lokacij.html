@@ -1,29 +1,24 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Pregled lokacij', napaka=napaka)
 
-<div style="display: inline-block;">
-    % include('orodna_vrstica.html', povezava='', napis='', stolpci='[1,2]')
-
-    <table id="izpis" cellpadding="0" cellspacing="0" border="1">
-        <tr>
-            <th>id</th>
-            <th>Lokacija</th>
-            <th>Vodja</th>
-            <th>Akcije</th>
-        </tr>
-        %for (id, lokacija, ime, priimek) in lokacije:
-        <tr>
-            <td>{{id}}</td>
-            <td>{{lokacija}}</td>
-            <td>{{ime}} {{priimek}}</td>
-            <td>
-                <form action="/zaposleni/sobe/{{id}}" method="get">
-                    <input value="Preglej sobe na lokaciji" type="submit" />
-                </form>
-            </td>
-        </tr>
-        %end
-    </table>
-</div>
-    
-
+% include('orodna_vrstica.html', povezava='', napis='', stolpci='[1,2]')
+<table id="izpis" class="table table-striped">
+    <tr>
+        <th>id</th>
+        <th>Lokacija</th>
+        <th>Vodja</th>
+        <th>Akcije</th>
+    </tr>
+    %for (id, lokacija, ime, priimek) in lokacije:
+    <tr>
+        <td>{{id}}</td>
+        <td>{{lokacija}}</td>
+        <td>{{ime}} {{priimek}}</td>
+        <td>
+            <form action="/zaposleni/sobe/{{id}}" method="get">
+                <a href="#" onclick="this.parentElement.submit()">Preglej sobe na lokaciji</a>
+            </form>
+        </td>
+    </tr>
+    %end
+</table>

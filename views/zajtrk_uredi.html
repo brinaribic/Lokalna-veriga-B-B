@@ -7,7 +7,7 @@
 % else:
 <form action="/zaposleni/zajtrki/dodaj" method="post">
 % end
-    <table cellpadding="0" cellspacing="0" border="0" class="edit-celica">
+    <table class="table table-borderless">
         <tr>
             <td>
                 <span>Id:</span> 
@@ -44,12 +44,12 @@
             </td>
             <td>
                 % if defined('zajtrk'):
-                <input name="cena" type="text" value="{{zajtrk[2]}}" />
+                <input name="cena" type="number" value="{{zajtrk[2]}}" />€
                 % else:
                 <input name="cena" type="number" step="0.01" required
                 oninput="preveriPolje(this)"
                 oninvalid="preveriPolje(this)" 
-                />
+                />€
                 % end
             </td>
         </tr>
@@ -59,9 +59,9 @@
             </td>
             <td>
                 % if defined('zajtrk'):
-                <input value="Popravi" type="submit" />
+                <input value="Popravi zajtrk" type="submit" />
                 % else:
-                <input value="Dodaj" type="submit" />
+                <input value="Dodaj nov zajtrk" type="submit" />
                 % end
             </td>
         </tr>

@@ -1,11 +1,19 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Prijava za ogled rezervacije', napaka=napaka)
 
-
-<form action="/rezervacija/prijava" method="post"> 
-    <span>Številka rezervacije:</span><input name='id' type='number' />
-    <br>
-    <span>Geslo:</span><input name='geslo' type='password' />
-    <br>
-    <input value='Prijava' type='submit' />
+<form action="/rezervacija/prijava" method="post">
+    <table class="table table-borderless">
+        <tr>
+            <td>Številka rezervacije:</td>
+            <td><input name='id' type='number' /></td>
+        </tr>
+        <tr>
+            <td>Geslo:</td>
+            <td><input name='geslo' type='password' /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input value='Prijava' type='submit' /></td>
+        </tr>
+    </table>
 </form>

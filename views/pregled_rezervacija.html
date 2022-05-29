@@ -1,26 +1,24 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Pregled rezervacij', napaka=napaka)
 
-<div style="display: inline-block;">
-    % include('orodna_vrstica.html', povezava='', napis='')
-    <table id="izpis" cellpadding="0" cellspacing="0" border="1">
-        <tr>
-            <th>id</th>
-            <th>Rezervirana soba</th>
-            <th>Pričetek bivanja</th>
-            <th>Število nočitev</th>
-            <th>Zajtrk</th>
-            <!-- vključi: Konec bivanja -->
-        </tr>
-        %for (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime) in rezervacija:
-            <tr>
-                <td>{{id}}</td>
-                <td>{{rezervirana_soba}}</td>
-                <td>{{pricetek_bivanja}}</td>
-                <td>{{stevilo_nocitev}}</td>
-                <td>{{ime}}</td>
-                <!-- vključi: Konec bivanja -->
-            </tr>
-        %end
-    </table>
-</div>
+% include('orodna_vrstica.html', povezava='', napis='')
+<table id="izpis" class="table table-striped">
+    <tr>
+        <th>id</th>
+        <th>Rezervirana soba</th>
+        <th>Pričetek bivanja</th>
+        <th>Število nočitev</th>
+        <th>Zajtrk</th>
+        <!-- vključi: Konec bivanja -->
+    </tr>
+    %for (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime) in rezervacija:
+    <tr>
+        <td>{{id}}</td>
+        <td>{{rezervirana_soba}}</td>
+        <td>{{pricetek_bivanja}}</td>
+        <td>{{stevilo_nocitev}}</td>
+        <td>{{ime}}</td>
+        <!-- vključi: Konec bivanja -->
+    </tr>
+    %end
+</table>

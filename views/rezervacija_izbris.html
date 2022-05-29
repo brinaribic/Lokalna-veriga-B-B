@@ -1,8 +1,14 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Zaključek rezervacije', napaka=napaka)
 
-Brisanje vaše rezervacije je bilo uspešno.
+<table class="table table-borderless">
+    <tr><td>Brisanje vaše rezervacije je bilo uspešno.</td></tr>
+    <tr>
+        <td>
+            <form action="/izbira_uporabnika" method="get">
+                <input value="Vrnitev na začetno stran" type="submit" />
+            </form>
+        </td>
+    </tr>
+</table>
 
-<form action="/izbira_uporabnika" method="get">
-    <input value="Vrnitev na začetno stran" type="submit" />
-</form>

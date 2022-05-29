@@ -248,6 +248,10 @@ def nova_rezervacija(id_lokacije):
     SELECT id, velikost, lokacija, cena
     FROM soba
     WHERE lokacija = %s
+    ORDER BY CASE WHEN velikost = 'enoposteljna' THEN 1
+              WHEN velikost = 'dvoposteljna' THEN 2
+              WHEN velikost = 'troposteljna' THEN 3
+              ELSE 4 END, cena
     """,
     (id_lokacije, ))
     soba = cur.fetchall()
@@ -309,9 +313,10 @@ def pregled_rezervacije(id):
 @get('/rezervacija/pregled/<id>/uredi')
 def uredi_rezervacijo_get(id):
     cur.execute("""
-        SELECT rezervacija.id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime
+        SELECT rezervacija.id, soba.velikost, soba.cena, pricetek_bivanja, stevilo_nocitev, ime
         FROM rezervacija 
         INNER JOIN zajtrk ON rezervacija.vkljucuje = zajtrk.id 
+        INNER JOIN soba ON rezervacija.rezervirana_soba = soba.id
         WHERE rezervacija.id = %s
     """, 
     (id, ))

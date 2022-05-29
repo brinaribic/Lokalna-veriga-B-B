@@ -1,15 +1,34 @@
 % setdefault('napaka', '')
 % rebase('base.html', naslov='Izberi želeno funkcijo', napaka=napaka)
 
-<form action="/zaposleni/prijava" method="GET">
-    <button type="submit">Zaposleni</button>
-</form>
+<table id="izpis" class="table table-borderless">
+    <tr>
+        <td>
+            <form action="/zaposleni/prijava" method="GET">
+                <button type="submit">Zaposleni</button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <form action="/rezervacija/nova/lokacija" method="GET">
+                <button type="submit">Nova rezervacija</button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <form action="/rezervacija/prijava" method="GET">
+                <button type="submit">Pregled obstoječe rezervacije</button>
+            </form>
+        </td>
+    </tr>
+</table>
 
-<form action="/rezervacija/nova/lokacija" method="GET">
-    <button type="submit">Nova rezervacija</button>
-</form>
 
-<form action="/rezervacija/prijava" method="GET">
-    <button type="submit">Pregled obstoječe rezervacije</button>
-</form>
+
+
+
+
+
 
