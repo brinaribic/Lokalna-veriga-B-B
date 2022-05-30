@@ -1,20 +1,16 @@
 % setdefault('napaka', '')
-% rebase('base.html', povezava='/zaposleni/prijava', zavihek='Zaposleni - prijava', naslov='Prijava zaposenih', napaka=napaka)
+% rebase('base.html', povezava='/zaposleni/prijava', zavihek='Zaposleni', naslov='Prijava za zaposlene', napaka=napaka)
 
-<form action="/zaposleni/prijava" method="post">
-    <table class="table table-borderless">
-        <tr>
-            <td>Emšo:</td>
-            <td><input name='emso' type='number' /></td>
-        </tr>
-        <tr>
-            <td>Geslo:</td>
-            <td><input name='geslo' type='password' /></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input value='Prijava' type='submit' /></td>
-        </tr>
-    </table>
+<form action="/zaposleni/prijava" method="post" class="row-g3 mx-2">
+    <div class="col-4">
+        <label for="emso" class="form-label my-3">Emšo:</label>
+        <input id="emso" name="emso" type="number" class="form-control" />
+    </div>
+    <div class="col-4">
+        <label for="geslo" class="form-label my-3">Geslo:</label>
+        <input id="geslo" name="geslo" type="password" class="form-control" />
+    </div>
+    <div class="col-12 my-3 d-flex justify-content-start">
+        <button class="btn btn-dark" type="submit">Prijava</button>
+    </div>
 </form>
-

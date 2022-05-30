@@ -1,32 +1,32 @@
 % setdefault('napaka', '')
-% rebase('base.html', povezava='', zavihek='', pregled='/zaposleni/izbira', izbira='', naslov='Zaposleni - izberi želeno področje', napaka=napaka)
+% rebase('base.html', povezava='', zavihek='', pregled='/zaposleni/izbira', izbira='', naslov='Izberi področje, ki si ga želiš ogledati', napaka=napaka)
 
 <table class="table table-borderless">
     <tr>
         <td>
             <form action="/zaposleni/rezervacije" method="GET">
-                <button type="submit">Pregled vseh obstoječih rezervacij</button>
+                <button class="btn btn-light" type="submit">Pregled obstoječih rezervacij</button>
             </form>
         </td>
     </tr>
     <tr>
         <td>
             <form action="/zaposleni/osebje" method="GET">
-                <button type="submit">Pregled zaposlenih</button>
+                <button class="btn btn-light" type="submit">Pregled zaposlenih</button>
             </form>
         </td>
     </tr>
     <tr>
         <td>
             <form action="/zaposleni/lokacije" method="GET">
-                <button type="submit">Pregled lokacij</button>
+                <button class="btn btn-light" type="submit">Pregled lokacij in njihovih sob</button>
             </form>
         </td>
     </tr>
     <tr>
         <td>
             <form action="/zaposleni/zajtrki" method="GET">
-                <button type="submit">Pregled zajtrkov</button>
+                <button class="btn btn-light" type="submit">Pregled zajtrkov</button>
             </form>
         </td>
     </tr>

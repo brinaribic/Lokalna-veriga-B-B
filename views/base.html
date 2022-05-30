@@ -9,7 +9,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
         <title>{{naslov}}</title>
-        <link rel="stylesheet" type="text/css" href="/static/stili.css" />
         <script src="/static/lokalna_veriga.js"></script>
     </head>
     <body>
@@ -22,7 +21,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                     % moznosti = ['/izbira_uporabnika', '/zaposleni/prijava', '/rezervacija/prijava', '/rezervacija/nova/lokacija']
-                    % zavihki = ['Začetna stran', 'Zaposleni - prijava', 'Pregled rezervacije', 'Nova rezervacija']
+                    % zavihki = ['Začetna stran', 'Zaposleni', 'Pregled rezervacije', 'Nova rezervacija']
                     % for i in range(len(moznosti)):
                     % if moznosti[i] == povezava:
                     <li class="nav-item"><a class="nav-link active" href="{{povezava}}">{{zavihek}}</a></li>
@@ -38,7 +37,7 @@
                         <ul class="dropdown-menu"  aria-labelledby="navbarDropdown">
                         % for i in range(len(pregledi)):
                         % if pregledi[i] == pregled:
-                        <li><a class="dropdown-item active " href="{{pregled}}">{{izbira}}</a></li>
+                        <li><a class="dropdown-item active" href="{{pregled}}">{{izbira}}</a></li>
                         % else:
                         <li><a class="dropdown-item" href="{{pregledi[i]}}">{{izbire[i]}}</a></li>
                         % end
@@ -52,7 +51,7 @@
         </nav>
 
         <div class="container">
-            <h2 class="my-3">{{naslov}}</h2>
+            <h3 class="my-3 mx-2">{{naslov}}</h3>
             % if napaka:
             <div class="alert alert-danger">
                 {{napaka}}

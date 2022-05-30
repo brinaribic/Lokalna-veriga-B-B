@@ -1,25 +1,28 @@
 % setdefault('napaka', '')
-% rebase('base.html', povezava='/izbira_uporabnika', zavihek='Začetna stran', naslov='Izberi želeno funkcijo', napaka=napaka)
+% rebase('base.html', povezava='/izbira_uporabnika', zavihek='Začetna stran', naslov='Dobrodošli na spletni strani lokalne verige B&B', napaka=napaka)
 
-<table class="table table-borderless">
+<table class="table table-borderless align-middle">
     <tr>
+        <td class="col-5">Si zaposleni in se želiš prijaviti?</td>
         <td>
             <form action="/zaposleni/prijava" method="GET">
-                <button type="submit">Zaposleni</button>
+                <button class="btn btn-light" type="submit">Prijava kot zaposleni</button>
             </form>
         </td>
     </tr>
     <tr>
+        <td>Bi rad pri nas ustvaril novo rezervacijo?</td>
         <td>
             <form action="/rezervacija/nova/lokacija" method="GET">
-                <button type="submit">Nova rezervacija</button>
+                <button class="btn btn-light" type="submit">Želim ustvariti novo rezervacijo</button>
             </form>
         </td>
     </tr>
     <tr>
+        <td>Že imaš rezervacijo in bi si jo rad/a ogledal/a ali uredil/a?</td>
         <td>
             <form action="/rezervacija/prijava" method="GET">
-                <button type="submit">Pregled obstoječe rezervacije</button>
+                <button class="btn btn-light" type="submit">Želim pregledati obstoječo rezervacijo</button>
             </form>
         </td>
     </tr>

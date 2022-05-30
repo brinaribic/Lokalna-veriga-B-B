@@ -1,14 +1,25 @@
 % setdefault('napaka', '')
-% rebase('base.html', povezava='/rezervacija/nova/lokacija', zavihek='Nova rezervacija', naslov='Izbira lokacije', napaka=napaka)
+% rebase('base.html', povezava='/rezervacija/nova/lokacija', zavihek='Nova rezervacija', naslov='Lokacije', napaka=napaka)
 
-<table id="izpis" class="table table-borderless">
-    %for (id, lokacija) in lokacija:
-    <tr>
-        <td>
-            <form action="/rezervacija/nova/{{id}}" method="get">
-                <a href="#" onclick="this.parentElement.submit()">{{lokacija}}</a>
+<p class="mx-2">V prvem koraku oblikovanja nove rezervacije te prosimo, da med naštetimi možnostmi izbereš želeno lokacijo.</p>
+
+
+
+<table class="table table-borderless">
+<tr>
+    %for i in range(0, len(lokacija)//2):
+        <form action="/rezervacija/nova/{{lokacija[i][0]}}" method="get">   
+            <td><button class="btn btn-light btn-outline-dark" type="submit">{{lokacija[i][1]}}</button></td>
+        </form>
+    %end 
+</tr>
+<tr>
+    %for j in range(len(lokacija)//2, len(lokacija)):
+            <form action="/rezervacija/nova/{{lokacija[j][0]}}" method="get">
+                <td><button class="btn btn-light btn-outline-dark" type="submit">{{lokacija[j][1]}}</button></td>
             </form>
-        </td>
-    </tr>
-    %end  
+    %end 
+</tr>
 </table>
+
+
