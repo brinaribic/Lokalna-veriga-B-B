@@ -275,7 +275,7 @@ def nova_rezervacija(id_lokacije):
     cur.execute("""
         SELECT id, ime, cena
         FROM zajtrk
-        ORDER BY id
+        ORDER BY ime
     """)
     zajtrki = cur.fetchall()
     return template('nova_rezervacija.html', nova_rezervacija=nova_rezervacija, zajtrki=zajtrki, rezervacija=rezervacija, soba=soba)

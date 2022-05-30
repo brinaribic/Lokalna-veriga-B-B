@@ -1,66 +1,54 @@
 % setdefault('napaka', '')
-% rebase('base.html', povezava='', zavihek='', naslov='Dodajanje rezervacije', napaka=napaka)
+% rebase('base.html', povezava='', zavihek='', naslov='Nova rezervacija', napaka=napaka)
 
-<form action="/rezervacija/nova/{{id}}" method="post">
-    <table id="izpis" class="table table-borderless">
-        <tr>
-            <td><span>Soba:</span></td>
-            <td>
-                <select name="rezervirana_soba" type="text" required
+<p class="mx-2">Če želiš ustvariti novo rezervacijo, izpolni sledeči obrazec.</p>
+
+<form action="/rezervacija/nova/{{id}}" method="post" class="row-g3 mx-2">
+    <div class="col-6">
+        <label for="rezervirana_soba" class="form-label">Soba:</label>
+        <select id="rezervirana_soba" name="rezervirana_soba" type="text" class="form-select" required
                     onselect="preveriPolje(this)"
                     oninvalid="preveriPolje(this)">
-                    <option disabled selected value> -- izberi možnost --
-                    </option>
-                    %for (id, velikost, lokacija, cena) in soba:
-                    <option value="{{id}}">{{velikost}}, {{cena}} €</option>
-                    %end
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td><span>Datum:</span></td>
-            <td>
-                <input name="pricetek_bivanja" type="date" required
+            <option disabled selected value> -- izberi možnost -- </option>
+            %for (id, velikost, lokacija, cena) in soba:
+                <option value="{{id}}">{{velikost}}, {{cena}} €</option>
+            %end
+        </select>
+    </div>
+    <div class="mb-3 row">
+        <div class="col-6">
+            <label for="pricetek_bivanja" class="form-label my-3">Datum prihoda:</label>
+            <input id="pricetek_bivanja" name="pricetek_bivanja" type="date" class="form-control" required
                     oninput="preveriPolje(this)"
                     oninvalid="preveriPolje(this)" />
-            </td>
-        </tr>
-        <tr>
-            <td><span>Število nočitev:</span></td>
-            <td>
-                <input name="stevilo_nocitev" type="number" step="1" required
+        </div>
+        <div class="col-6">
+            <label for="stevilo_nocitev" class="form-label my-3">Število nočitev:</label>
+            <input id="stevilo_nocitev" name="stevilo_nocitev" type="number" step="1" class="form-control" required
                     oninput="preveriPolje(this)"
                     oninvalid="preveriPolje(this)" />
-            </td>
-        </tr>
-        <tr>
-            <td><span>Zajtrk:</span></td>
-            <td>
-                <select name="vkljucuje" type="text" value="" required
+        </div>
+    </div>
+    <div class="col-6">
+        <label for="vkljucuje" class="form-label my-2">Vrsta zajtrka:</label>
+        <select id="vkljucuje" name="vkljucuje" type="text" class="form-select my-2" required
                     onselect="preveriPolje(this)"
-                    oninvalid="preveriPolje(this)">>
-                    <option disabled selected value> -- izberi možnost --
-                    </option>
-                    %for (id, ime, cena_zajtrk) in zajtrki:
-                    <option value="{{id}}">{{ime}}, {{cena_zajtrk}} €</option>
-                    %end
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="geslo">Geslo:</label></td>
-            <td>
-                <input id="geslo" name="geslo" type="password" required
+                    oninvalid="preveriPolje(this)">
+            <option disabled selected value> -- izberi možnost -- </option>
+            %for (id, ime, cena_zajtrk) in zajtrki:
+                <option value="{{id}}">{{ime}}, {{cena_zajtrk}}€</option>
+            %end
+        </select>
+    </div>
+    <div class="col-6">
+        <label for="geslo" class="form-label my-3">Geslo:</label>
+        <input id="geslo" name="geslo" type="password" class="form-control" required
                     oninput="preveriPolje(this)"
-                    oninvalid="preveriPolje(this)"
-                    />
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input value="Oddaj novo rezervacijo!" type="submit" /></td>
-        </tr>
-    </table>
+                    oninvalid="preveriPolje(this)" />
+    </div>
+    <div class="col-12 d-flex justify-content-start">
+        <button class="btn btn-dark my-3" type="submit">Oddaj novo rezervacijo!</button>
+    </div>
 </form>
 
 <script>
@@ -74,3 +62,4 @@
         }
     }
 </script>
+
