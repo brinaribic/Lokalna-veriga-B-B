@@ -1,16 +1,17 @@
 % setdefault('napaka', '')
-% rebase('base.html', povezava='', zavihek='', naslov='Obstoječa rezervacija', napaka=napaka)
+% rebase('base.html', povezava='', zavihek='', naslov='Pregled obstoječe rezervacije', napaka=napaka)
 
-<table id="izpis" class="table table-borderless">
+<table class="table table-hover">
+    <thead class="table-secondary">
     <tr>
         <th>id</th>
         <th>Rezervirana soba</th>
         <th>Pričetek bivanja</th>
         <th>Število nočitev</th>
-        <th>Zajtrk</th>
+        <th>Izbran zajtrk</th>
         <!-- vključi: Konec bivanja -->
-        <th>Možnosti</th>
     </tr>
+</thead>
     %for (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime) in rezervacija:
         <tr>
             <td>{{id}}</td>
@@ -19,16 +20,23 @@
             <td>{{stevilo_nocitev}}</td>
             <td>{{ime}}</td>
             <!-- vključi: Konec bivanja -->
-            <td>
-                <div class="akcije">
-                    <form action="/rezervacija/pregled/{{id}}/uredi" method="get" class="akcija">
-                        <a href="#" onclick="this.parentElement.submit()">Uredi</a>
-                    </form>
-                    <form action="/rezervacija/pregled/{{id}}/brisi" method="post" class="akcija">
-                        <a href="#" onclick="this.parentElement.submit()">Briši</a>
-                    </form>
-                </div>
-            </td>
+            
         </tr>
-    %end
-</table>
+    </table>  
+
+    <div class="row g-0">
+        <div class="col-8"></div>
+        <div class="col-sm-6 col-md-2">
+            <form action="/rezervacija/pregled/{{id}}/uredi" method="get">
+                <button href="#" onclick="this.parentElement.submit()" class="btn btn-dark">Uredi svojo rezervacijo</a>
+            </form>
+        </div>
+        <div class="col-6 col-md-2">
+            <form action="/rezervacija/pregled/{{id}}/brisi" method="post">
+                <button href="#" onclick="this.parentElement.submit()" class="btn btn-dark">Izbriši svojo rezervacijo</a>
+            </form>
+        </div>
+    </div>
+
+    
+ %end

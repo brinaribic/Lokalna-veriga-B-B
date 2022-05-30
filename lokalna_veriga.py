@@ -168,7 +168,7 @@ def dodaj_zaposlenega():
 def uredi_zaposlenega_get(emso):
     cur.execute("SELECT emso, ime, priimek FROM zaposleni WHERE emso = %s", (emso, ))
     zaposleni = cur.fetchone()
-    return template('zaposleni_uredi.html', zaposleni=zaposleni, naslov="Uredi zaposlenega")
+    return template('zaposleni_uredi.html', zaposleni=zaposleni, naslov="Uredi izbranega zaposlenega")
 
 @post('/zaposleni/osebje/uredi/<emso>')
 def uredi_zaposlenega_post(emso):
@@ -201,7 +201,7 @@ def dodaj_zajtrk():
 def uredi_zajtrk_get(id):
     cur.execute("SELECT id, ime, cena FROM zajtrk WHERE id = %s", (id, ))
     zajtrk = cur.fetchone()
-    return template('zajtrk_uredi.html', zajtrk=zajtrk, naslov="Uredi zajtrk")
+    return template('zajtrk_uredi.html', zajtrk=zajtrk, naslov="Uredi izbrano vrsto zajtrka")
 
 @post('/zaposleni/zajtrki/uredi/<id>')
 def uredi_zajtrk_post(id):

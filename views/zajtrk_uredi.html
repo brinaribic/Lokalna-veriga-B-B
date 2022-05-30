@@ -1,16 +1,17 @@
 % setdefault('napaka', '')
-% setdefault('naslov', 'Dodajanje novega zajtrka')
+% setdefault('naslov', 'Dodajanje nove vrste zajtrka')
 % rebase('base.html', povezava='', zavihek='', naslov=naslov, napaka=napaka)
 
 % if defined('zajtrk'):
-<form action="/zaposleni/zajtrki/uredi/{{zajtrk[0]}}" method="post" class="row-g3">
+<form action="/zaposleni/zajtrki/uredi/{{zajtrk[0]}}" method="post" class="row-g3 mx-2">
 % else:
-<form action="/zaposleni/zajtrki/dodaj" method="post" class="row-g3">
+<form action="/zaposleni/zajtrki/dodaj" method="post" class="row-g3 mx-2">
 % end
-    <div class="col-12">
-        <label for="id" class="form-label">Id</label>
+<div class="row">
+    <div class="col-6">
+        <label for="id" class="form-label my-3">Id:</label>
         % if defined('zajtrk'):
-            {{zajtrk[0]}}
+            <input type="text" readonly class="form-control-plaintext" id="id" value="{{zajtrk[0]}}">
         % else:
             <input id="id" name="id" type="number" class="form-control" required
                 oninput="preveriPolje(this)"
@@ -18,8 +19,10 @@
             />
         % end
     </div>
-    <div class="col-md-6">
-        <label for="ime" class="form-label">Ime</label>
+</div>
+<div class="row">
+    <div class="col-6">
+        <label for="ime" class="form-label my-3">Ime:</label>
         % if defined('zajtrk'):
             <input id="ime" name="ime" type="text" class="form-control" value="{{zajtrk[1]}}" />
         % else:
@@ -29,8 +32,8 @@
             />
         % end
     </div>
-    <div class="col-md-6">
-        <label for="cena" class="form-label">Cena</label>
+    <div class="col-6">
+        <label for="cena" class="form-label my-3">Cena:</label>
         % if defined('zajtrk'):
             <input id="cena" name="cena" type="number" class="form-control" value="{{zajtrk[2]}}" />
         % else:
@@ -40,11 +43,12 @@
             />
         % end
     </div>
-    <div class="col-12 d-flex justify-content-end">
-        <button class="btn btn-primary" type="submit">
-            {{'Popravi zajtrk' if defined('zajtrk') else 'Dodaj nov zajtrk'}}
-        </button>
-    </div>
+</div>
+<div class="col-12 d-flex justify-content-end my-3">
+    <button class="btn btn-dark" type="submit">
+        {{'Popravi izbrano vrsto zajtrka' if defined('zajtrk') else 'Dodaj novo vrsto zajtrka'}}
+    </button>
+</div>
 </form>
 
 

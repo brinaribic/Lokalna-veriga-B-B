@@ -1,12 +1,12 @@
 % setdefault('napaka', '')
-% rebase('base.html', povezava='', zavihek='', naslov='Zaključek rezervacije', napaka=napaka)
+% rebase('base.html', povezava='', zavihek='', naslov='Uspešen izbris rezervacije', napaka=napaka)
 
 <table class="table table-borderless">
     <tr><td>Brisanje vaše rezervacije je bilo uspešno.</td></tr>
     <tr>
         <td>
             <form action="/izbira_uporabnika" method="get">
-                <input value="Vrnitev na začetno stran" type="submit" />
+                <button class="btn btn-dark" type="submit">Vrnitev na začetno stran</button>
             </form>
         </td>
     </tr>

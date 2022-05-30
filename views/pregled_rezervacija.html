@@ -1,16 +1,18 @@
 % setdefault('napaka', '')
-% rebase('base.html', povezava='', zavihek='', pregled='/zaposleni/rezervacije', izbira='Pregled vseh obstoječih rezervacij', naslov='Pregled rezervacij', napaka=napaka)
+% rebase('base.html', povezava='', zavihek='', pregled='/zaposleni/rezervacije', izbira='Pregled rezervacij', naslov='Pregled rezervacij', napaka=napaka)
 
-% include('orodna_vrstica.html', povezava='', napis='')
-<table id="izpis" class="table table-striped">
+% include('orodna_vrstica.html', povezava='', napis='', stolpci='[0,1,2,3,4]')
+<table id="izpis" class="table table-hover">
+    <thead class="table-secondary">
     <tr>
         <th>id</th>
         <th>Rezervirana soba</th>
         <th>Pričetek bivanja</th>
         <th>Število nočitev</th>
-        <th>Zajtrk</th>
+        <th>Izbran zajtrk</th>
         <!-- vključi: Konec bivanja -->
     </tr>
+    </thead>
     %for (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime) in rezervacija:
     <tr>
         <td>{{id}}</td>

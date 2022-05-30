@@ -1,22 +1,24 @@
 % setdefault('napaka', '')
-% rebase('base.html', povezava='', zavihek='', pregled='/zaposleni/lokacije', izbira='Pregled lokacij', naslov='Sobe na izbrani lokaciji', napaka=napaka)
+% rebase('base.html', povezava='', zavihek='', pregled='/zaposleni/lokacije', izbira='Pregled lokacij', naslov='Pregled sob na izbrani lokaciji', napaka=napaka)
 
 
-% include('orodna_vrstica.html', povezava='', napis='')
+% include('orodna_vrstica.html', povezava='', napis='', stolpci='[0,1,2,3]')
 
 <form action="/zaposleni/sobe/{{sobe[0]}}" method="get">
-    <table id="izpis" class="table table-striped">
+    <table id="izpis" class="table table-hover">
+        <thead class="table-secondary">
         <tr>
             <th>id</th>
             <th>Velikost sobe</th>
             <th>Cena</th>
             <th>Odgovorna oseba</th>
         </tr>
+        </thead>
         %for (id, velikost, cena, ime, priimek) in sobe:
         <tr>
             <td>{{id}}</td>
             <td>{{velikost}}</td>
-            <td>{{cena}}</td>
+            <td>{{cena}}€</td>
             <td>{{ime}} {{priimek}}</td>
         </tr>
         %end

@@ -2,49 +2,44 @@
 % setdefault('naslov', 'Urejanje obstoječe rezervacije')
 % rebase('base.html', povezava='', zavihek='', naslov=naslov, napaka=napaka)
 
-<form action="/rezervacija/pregled/{{rezervacija[0]}}/uredi" method="post">
-    <table class="table table-borderless">
-        <tr>
-            <td><span>Id:</span></td>
-            <td>{{rezervacija[0]}}</td>
-        </tr>
-        <tr>
-            <td><span>Soba:</span></td>
-            <td>{{rezervacija[1]}}, {{rezervacija[2]}}€</td>
-        </tr>
-        <tr>
-            <td><span>Pričetek bivanja:</span></td>
-            <td>
-                <input name="pricetek_bivanja" type="date" value="{{rezervacija[3]}}" required 
+<form action="/rezervacija/pregled/{{rezervacija[0]}}/uredi" method="post" class="row-g3 mx-2">
+    <div class="col-6">
+        <label for="id" class="form-label my-3">Id:</label>
+        <input type="text" readonly class="form-control-plaintext" id="id" value="{{rezervacija[0]}}">
+    </div>
+    <div class="col-6">
+        <label for="rezervirana_soba" class="form-label">Soba:</label>
+        <input type="text" readonly class="form-control-plaintext" id="id" value="{{rezervacija[1]}}, {{rezervacija[2]}}€">
+    </div>
+    <div class="mb-3 row">
+        <div class="col-6">
+            <label for="pricetek_bivanja" class="form-label my-3">Datum prihoda:</label>
+            <input id="pricetek_bivanja" name="pricetek_bivanja" type="date" value="{{rezervacija[3]}}" class="form-control" required
                     oninput="preveriPolje(this)"
-                    oninvalid="preveriPolje(this)"/>
-            </td>
-        </tr>
-        <tr>
-            <td><span>Število nočitev:</span></td>
-            <td>
-                <input name="stevilo_nocitev" type="text" value="{{rezervacija[4]}}" />
-            </td>
-        </tr>
-        <tr>
-            <td><span>Vrsta zajtrka:</span></td>
-            <td>
-                <select name="ime" type="text" value="{{rezervacija[5]}}"> 
-                    %for (id, ime, cena) in zajtrki:
-                    %if ime == rezervacija[5]:
-                    <option selected value="{{id}}">{{ime}}, {{cena}} €</option>
-                    %else:
-                    <option value="{{id}}">{{ime}}, {{cena}} €</option>
-                    %end
-                    %end
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input value="Popravi rezervacijo" type="submit" /></td>
-        </tr>
-    </table>
+                    oninvalid="preveriPolje(this)" />
+        </div>
+        <div class="col-6">
+            <label for="stevilo_nocitev" class="form-label my-3">Število nočitev:</label>            
+            <input id="stevilo_nocitev" name="stevilo_nocitev" type="number" step="1" value="{{rezervacija[4]}}" class="form-control" required
+                    oninput="preveriPolje(this)"
+                    oninvalid="preveriPolje(this)" />
+        </div>
+    </div>
+    <div class="col-6">
+        <label for="ime" class="form-label my-2">Vrsta zajtrka:</label>
+        <select id="ime" name="ime" type="text" value="{{rezervacija[5]}}" class="form-select my-2"> 
+            %for (id, ime, cena) in zajtrki:
+            %if ime == rezervacija[5]:
+            <option selected value="{{id}}">{{ime}}, {{cena}} €</option>
+            %else:
+            <option value="{{id}}">{{ime}}, {{cena}} €</option>
+            %end
+            %end
+        </select>
+    </div>
+    <div class="col-12 d-flex justify-content-start">
+        <button class="btn btn-dark my-3" type="submit">Popravi svojo rezervacijo</button>
+    </div>
 </form>
 
 <script>

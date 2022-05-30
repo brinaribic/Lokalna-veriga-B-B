@@ -1,22 +1,24 @@
 % setdefault('napaka', '')
-% rebase('base.html', povezava='', zavihek='', pregled='/zaposleni/zajtrki', izbira='Pregled zajtrkov', naslov='Mogoči zajtrki', napaka=napaka)
+% rebase('base.html', povezava='', zavihek='', pregled='/zaposleni/zajtrki', izbira='Pregled zajtrkov', naslov='Pregled zajtrkov', napaka=napaka)
 
-% include('orodna_vrstica.html', povezava='/zaposleni/zajtrki/dodaj', napis='Dodaj zajtrk')
-<table id="izpis" class="table table-striped">
+% include('orodna_vrstica.html', povezava='/zaposleni/zajtrki/dodaj', napis='Dodaj novo vrsto zajtrka', stolpci='[1]')
+<table id="izpis" class="table table-hover">
+    <thead class="table-secondary">
     <tr>
         <th>id</th>
         <th>Ime</th>
         <th>Cena</th>
-        <th>Akcije</th>
+        <th>Možnosti</th>
     </tr>
+    </thead>
     %for (id,ime,cena) in zajtrki:
     <tr>
         <td>{{id}}</td>
         <td>{{ime}}</td>
-        <td>{{cena}}</td>
-        <td>
+        <td>{{cena}}€</td>
+        <td class="align-end">
             <form action="/zaposleni/zajtrki/uredi/{{id}}" method="get">
-                <a href="#" onclick="this.parentElement.submit()">Uredi</a>
+                <a href="#" onclick="this.parentElement.submit()" class="link-secondary">Uredi vrsto zajtrka</a>
             </form>
         </td>
     </tr>

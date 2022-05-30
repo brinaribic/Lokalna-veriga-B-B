@@ -3,69 +3,54 @@
 % rebase('base.html', povezava='', zavihek='', naslov=naslov, napaka=napaka)
 
 % if defined('zaposleni'):
-<form action="/zaposleni/osebje/uredi/{{zaposleni[0]}}" method="post">
+<form action="/zaposleni/osebje/uredi/{{zaposleni[0]}}" method="post" class="row-g3 mx-2">
 % else:
-<form action="/zaposleni/osebje/dodaj" method="post">
+<form action="/zaposleni/osebje/dodaj" method="post" class="row-g3 mx-2">
 % end
-    <table class="table table-borderless">
-        <tr>
-            <td>
-                <span>Emšo:</span> 
-            </td>
-            <td>
-                % if defined('zaposleni'):
-                    {{zaposleni[0]}}
-                % else:
-                <input name="emso" type="number" required
+<div class="row">
+    <div class="col-6">
+        <label for="emso" class="form-label my-3">Id:</label>
+        % if defined('zaposleni'):
+            <input type="text" readonly class="form-control-plaintext" id="emso" value="{{zaposleni[0]}}">
+        % else:
+            <input id="emso" name="emso" type="number" class="form-control" required
                 oninput="preveriPolje(this)"
                 oninvalid="tpreveriPolje(this)" 
-                /> 
-                % end
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span>Ime:</span>
-            </td>
-            <td>
-                % if defined('zaposleni'):
-                <input name="ime" type="text" value="{{zaposleni[1]}}" />
-                % else:
-                <input name="ime" type="text" required
+            /> 
+        % end
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <label for="ime" class="form-label my-3">Ime:</label>
+        % if defined('zaposleni'):
+            <input id="ime" name="ime" type="text" class="form-control" value="{{zaposleni[1]}}" />
+        % else:
+            <input id="ime" name="ime" type="text" class="form-control" required
                 oninput="preveriPolje(this)"
                 oninvalid="preveriPolje(this)" 
-                />
-                % end
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span>Priimek:</span>
-            </td>
-            <td>
-                % if defined('zaposleni'):
-                <input name="priimek" type="text" value="{{zaposleni[2]}}" />
-                % else:
-                <input name="priimek" type="text" required
+            />
+        % end
+    </div>
+    <div class="col-6">
+        <label for="priimek" class="form-label my-3">Priimek:</label>
+        % if defined('zaposleni'):
+            <input id="priimek" name="priimek" type="text" class="form-control" value="{{zaposleni[2]}}" />
+        % else:
+            <input id="priimek" name="priimek" type="text" class="form-control" required
                 oninput="preveriPolje(this)"
                 oninvalid="preveriPolje(this)" 
-                />
-                % end
-            </td>
-        </tr>
-        <tr>
-            <td>
-                
-            </td>
-            <td>
-                % if defined('zaposleni'):
-                <input value="Popravi podatke zaposlenega" type="submit" />
-                % else:
-                <input value="Dodaj novega zaposlenega" type="submit" />
-                % end
-            </td>
-        </tr>
-    </table>
+            />
+        % end
+    </div>
+</div>
+<div>
+    <div class="col-12 d-flex justify-content-end my-3">
+        <button class="btn btn-dark" type="submit">
+            {{'Popravi podatke zaposlenega' if defined('zaposleni') else 'Dodaj novega zaposlenega'}}
+        </button>
+    </div>
+</div>
 </form>
 
 <script>
