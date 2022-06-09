@@ -1,37 +1,48 @@
 % setdefault('napaka', '')
 % rebase('base.html', povezava='/izbira_uporabnika', zavihek='Začetna stran', naslov='Dobrodošli na spletni strani lokalne verige B&B', napaka=napaka)
 
-<table class="table table-borderless align-middle">
+
+ <p class="h5">
+    Bi si želeli preživeti počitnice na eni izmed spodnjih lokacij?
+ </p>
+ <p>
+    <img src='/static/hotel1.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+    <img src='/static/hotel9.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+    <img src='/static/hotel2.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+    <img src='/static/hotel3.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+    <img src='/static/hotel4.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+</p>
+<div style = "position:fixed; top:310px">
+    <img src='/static/hotel5.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"> 
+    <img src='/static/hotel6.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+    <img src='/static/hotel7.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+    <img src='/static/hotel8.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+    <img src='/static/hotel10.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+</div>
+ </p>
+ <p>
+ 
+ <div style = "position:fixed; top:480px">
+    <form action="/rezervacija/nova/lokacija" method="GET">
+        <button class="btn btn-outline-danger" type="submit">Želim rezrvirati!</button>
+        </form> 
+ </div>
+
+ <table class="table table-borderless align-middle" style="position:fixed; top:520px">
     <tr>
-        <td class="col-5">Si zaposleni in se želiš prijaviti?</td>
-        <td>
-            <form action="/zaposleni/prijava" method="GET">
-                <button class="btn btn-light" type="submit">Prijava kot zaposleni</button>
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <td>Bi rad pri nas ustvaril novo rezervacijo?</td>
-        <td>
-            <form action="/rezervacija/nova/lokacija" method="GET">
-                <button class="btn btn-light" type="submit">Želim ustvariti novo rezervacijo</button>
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <td>Že imaš rezervacijo in bi si jo rad/a ogledal/a ali uredil/a?</td>
         <td>
             <form action="/rezervacija/prijava" method="GET">
-                <button class="btn btn-light" type="submit">Želim pregledati obstoječo rezervacijo</button>
+                <button class="btn btn-outline-dark" type="submit">Že imaš rezervacijo in bi si jo rad/a ogledal/a ali uredil/a?</button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <form action="/zaposleni/prijava" method="GET">
+                <button class="btn btn-outline-dark" type="submit">Si zaposleni in se želiš prijaviti?</button>
             </form>
         </td>
     </tr>
 </table>
-
-
-
-
-
-
 
 

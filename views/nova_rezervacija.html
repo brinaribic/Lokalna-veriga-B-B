@@ -1,6 +1,10 @@
 % setdefault('napaka', '')
 % rebase('base.html', povezava='', zavihek='', naslov='Nova rezervacija', napaka=napaka)
 
+<div>
+    <img src="/static/reservation_logo.jpg" class="rounded float-end" style="width:100px;height:100px;">
+</div>
+
 <p class="mx-2">Če želiš ustvariti novo rezervacijo, izpolni sledeči obrazec.</p>
 
 <form action="/rezervacija/nova/{{id}}" method="post" class="row-g3 mx-2">
@@ -29,6 +33,7 @@
                     oninvalid="preveriPolje(this)" />
         </div>
     </div>
+
     <div class="col-6">
         <label for="vkljucuje" class="form-label my-2">Vrsta zajtrka:</label>
         <select id="vkljucuje" name="vkljucuje" type="text" class="form-select my-2" required

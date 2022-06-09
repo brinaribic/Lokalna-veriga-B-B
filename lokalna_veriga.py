@@ -305,8 +305,32 @@ def konec_rezervacije(id):
     pricetek_bivanja = datetime.datetime.strptime(str(rezervacija[0][2]), "%Y-%m-%d")
     konec_bivanja = stevilo_nocitev + pricetek_bivanja
     konec_bivanja = konec_bivanja.date()
-    # dodaj se celotno placilo 
-    return template('rezervacija_konec.html',id=id,rezervacija=rezervacija,konec_bivanja=konec_bivanja, pricetek_bivanja=pricetek_bivanja)
+    rez_soba = rezervacija[0][1]
+    cur.execute("""
+    SELECT id, velikost, lokacija, cena
+    FROM soba
+    WHERE id = %s
+    ORDER BY CASE WHEN velikost = 'enoposteljna' THEN 1
+              WHEN velikost = 'dvoposteljna' THEN 2
+              WHEN velikost = 'troposteljna' THEN 3
+              ELSE 4 END, cena
+    """,
+    (rez_soba, ))
+    soba = cur.fetchall()
+    cena_soba = soba[0][3]*rezervacija[0][3]
+    vklj_zajtrk = rezervacija[0][4]
+    cur.execute("""
+    SELECT id, ime, cena
+    FROM zajtrk
+    WHERE id = %s
+    ORDER BY ime
+    """,
+    (vklj_zajtrk, ))
+    zajtrki = cur.fetchall()
+    cena_zajtrk = rezervacija[0][3]*zajtrki[0][2]
+    skupaj_cena = cena_zajtrk + cena_soba
+    return template('rezervacija_konec.html',id=id,rezervacija=rezervacija,
+                    konec_bivanja=konec_bivanja, pricetek_bivanja=pricetek_bivanja, skupaj_cena=skupaj_cena, cena_soba=cena_soba)
 
 
 # poizvedba, ki uporabniku vrne le njegovo rezervacijo
@@ -324,7 +348,32 @@ def pregled_rezervacije(id):
     pricetek_bivanja = datetime.datetime.strptime(str(rezervacija[0][2]), "%Y-%m-%d")
     konec_bivanja = stevilo_nocitev + pricetek_bivanja
     konec_bivanja = konec_bivanja.date()
-    return template('pregled_obstojeca_rezervacija.html', rezervacija=rezervacija, konec_bivanja=konec_bivanja)
+    rez_soba = rezervacija[0][1]
+    cur.execute("""
+    SELECT id, velikost, lokacija, cena
+    FROM soba
+    WHERE id = %s
+    ORDER BY CASE WHEN velikost = 'enoposteljna' THEN 1
+              WHEN velikost = 'dvoposteljna' THEN 2
+              WHEN velikost = 'troposteljna' THEN 3
+              ELSE 4 END, cena
+    """,
+    (rez_soba, ))
+    soba = cur.fetchall()
+    cena_soba = soba[0][3]*rezervacija[0][3]
+    vklj_zajtrk = rezervacija[0][4]
+    cur.execute("""
+    SELECT id, ime, cena
+    FROM zajtrk
+    WHERE ime = %s
+    ORDER BY ime
+    """,
+    (vklj_zajtrk, ))
+    zajtrki = cur.fetchall()
+    cena_zajtrk = rezervacija[0][3]*zajtrki[0][2]
+    skupaj_cena = cena_zajtrk + cena_soba
+    return template('pregled_obstojeca_rezervacija.html', rezervacija=rezervacija, 
+                    konec_bivanja=konec_bivanja, cena_soba=cena_soba, cena_zajtrk = cena_zajtrk, skupaj_cena=skupaj_cena)
 
 # urejanje obstoječe rezervacije
 @get('/rezervacija/pregled/<id>/uredi')
