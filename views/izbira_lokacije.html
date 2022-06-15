@@ -9,32 +9,20 @@
 <tr>
     %for i in range(0, len(lokacija)//2):
         <form action="/rezervacija/nova/{{lokacija[i][0]}}" method="get">   
-            <td><button class="btn btn-light btn-outline-dark" type="submit">{{lokacija[i][1]}}</button></td>
+            <td><button class="btn btn-light btn-outline-dark" type="submit">{{lokacija[i][1]}}</button>
+                <img src='/static/hotel{{i+1}}.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+            </td>
         </form>
     %end 
-</tr>
-<tr>
-    <img src='/static/hotel1.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
-    <img src='/static/hotel9.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
-    <img src='/static/hotel2.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
-    <img src='/static/hotel3.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
-    <img src='/static/hotel4.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
 </tr>
 <tr>
     %for j in range(len(lokacija)//2, len(lokacija)):
             <form action="/rezervacija/nova/{{lokacija[j][0]}}" method="get">
                 <td><button class="btn btn-light btn-outline-dark" type="submit" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Prosim izberite lokacijo">
-                    {{lokacija[j][1]}}</button></td>
+                    {{lokacija[j][1]}}</button>
+                    <img src='/static/hotel{{j+1}}.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
+                </td>
             </form>
     %end 
 </tr>
-<tr>
-    <img src='/static/hotel5.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"> 
-        <img src='/static/hotel6.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
-        <img src='/static/hotel7.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
-        <img src='/static/hotel8.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
-        <img src='/static/hotel10.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
-</tr>
 </table>
-
-
