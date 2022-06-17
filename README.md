@@ -1,7 +1,7 @@
 # Lokalna veriga B&B
 
-* [![Jupyter](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/brinaribic/Lokalna-veriga-B-B/main) Jupyter
-* [![bottle.py](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/brinaribic/Lokalna-veriga-B-B/main?urlpath=proxy/8080/) Aplikacija 
+* [![Jupyter](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/brinaribic/Lokalna-veriga-B-B/master) Jupyter
+* [![bottle.py](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/brinaribic/Lokalna-veriga-B-B/master?urlpath=proxy/8080/) Aplikacija `bottle.py`
 
 ## Kratek opis
 
