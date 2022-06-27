@@ -18,6 +18,9 @@ Pri slednjem mora paziti, da je vedno na lokaciji
 vsaj en zaposlen. Poleg tega lahko vodja v ponudbo zajtrkov doda novega ali odstrani oziroma uredi že obstoječega.
 Za lažje vodenje verige ima pregled tudi nad vsemi rezervacijami, katerih sam ne more spreminjati, saj to lahko naredi le
 uporabnik, ki si v ta namen ob rezervaciji naredi geslo.
+
+Za možnost pregleda delovanja aplikacije za zaposlene se lahko prijavimo z EMŠO-m 1 in geslom 1234.
+
 ## ER diagram
 
 ![ER diagram](https://github.com/brinaribic/projektna-naloga/blob/main/diagram/er_diagram.png)
