@@ -61,7 +61,7 @@ def prijava_post():
     geslo = request.forms.get('geslo')
     if emso is None or geslo is None:
         nastaviSporocilo('Izpolniti morate vsa okenca.') 
-        redirect('/zaposleni/prijava')
+        redirect(url('prijava_get'))
     hashBaza = None
     try: 
         cur.execute("SELECT geslo FROM zaposleni WHERE emso = %s", [emso])
@@ -70,13 +70,13 @@ def prijava_post():
         hashBaza = None
     if hashBaza is None:
         nastaviSporocilo('Prijava ni mogoča.') 
-        redirect('/zaposleni/prijava')
+        redirect(url('prijava_get'))
         return
     if hashGesla(geslo) != hashBaza:
         nastaviSporocilo('Nekaj je šlo narobe.') 
-        redirect('/zaposleni/prijava')
+        redirect(url('prijava_get'))
         return
-    redirect('/zaposleni/izbira')
+    redirect(url('izbira_pregleda'))
 
 
 
@@ -161,7 +161,7 @@ def dodaj_zaposlenega():
     priimek = request.forms.priimek
     cur.execute("INSERT INTO zaposleni (emso, ime, priimek) VALUES (%s, %s, %s)", (emso, ime, priimek))
     conn.commit()
-    redirect('/zaposleni/osebje')
+    redirect(url('pregled_osebja'))
 
 # urejanje osebja
 @get('/zaposleni/osebje/uredi/<emso>')
@@ -176,7 +176,7 @@ def uredi_zaposlenega_post(emso):
     priimek = request.forms.priimek
     cur.execute("UPDATE zaposleni SET ime = %s, priimek = %s WHERE emso = %s", (ime, priimek, emso))
     conn.commit()
-    redirect('/zaposleni/osebje')
+    redirect(url('pregled_osebja'))
 
 #################################################################
 ### Urejanje zajtrkov
@@ -194,7 +194,7 @@ def dodaj_zajtrk():
     cena = request.forms.cena
     cur.execute("INSERT INTO zajtrk (id, ime, cena) VALUES (%s, %s, %s)", (id, ime, cena))
     conn.commit()
-    redirect('/zaposleni/zajtrki')
+    redirect(url('pregled_zajtrkov'))
 
 # urejanje zajtrkov
 @get('/zaposleni/zajtrki/uredi/<id>')
@@ -209,7 +209,7 @@ def uredi_zajtrk_post(id):
     cena = request.forms.cena
     cur.execute("UPDATE zajtrk SET ime = %s, cena = %s WHERE id = %s", (ime, cena, id))
     conn.commit()
-    redirect('/zaposleni/zajtrki')
+    redirect(url('pregled_zajtrkov'))
 
 #################################################################
 ### Rezervacija
@@ -238,7 +238,7 @@ def rezervacija_prijava_post():
         nastaviSporocilo('Nekaj je šlo narobe.') 
         redirect('/rezervacija/prijava')
         return
-    redirect(f'/rezervacija/pregled/{id}')
+    redirect(url('pregled_rezervacije', id=id))
 
 # nova rezervacija
 @get('/rezervacija/nova/lokacija')
@@ -293,7 +293,7 @@ def dodaj_rezervacijo(id_lokacije):
     cur.execute("INSERT INTO rezervacija (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, geslo) VALUES (%s, %s, %s, %s, %s, %s)",
                     (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, zgostitev))
     conn.commit()
-    redirect(f'/rezervacija/zakljucek/{id}')
+    redirect(url('konec_rezervacije', id_lokacije=id))
 
 @get('/rezervacija/zakljucek/<id>')
 def konec_rezervacije(id):
@@ -402,7 +402,7 @@ def uredi_rezervacija_post(id):
     ime = request.forms.ime
     cur.execute("UPDATE rezervacija SET pricetek_bivanja = %s, stevilo_nocitev = %s, vkljucuje = %s WHERE id = %s", (pricetek_bivanja, stevilo_nocitev, ime, id))
     conn.commit()
-    redirect(f'/rezervacija/zakljucek/{id}')
+    redirect(url('konec_rezervacije',id=id))
 
 # brisanje rezervacije
 @post('/rezervacija/pregled/<id>/brisi')

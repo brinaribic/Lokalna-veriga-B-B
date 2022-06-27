@@ -4,28 +4,28 @@
 <table class="table table-borderless">
     <tr>
         <td>
-            <form action="/zaposleni/rezervacije" method="GET">
+            <form action="{{url('pregled_vseh_rezervacij')}}" method="GET">
                 <button class="btn btn-light" type="submit">Pregled rezervacij</button>
             </form>
         </td>
     </tr>
     <tr>
         <td>
-            <form action="/zaposleni/osebje" method="GET">
+            <form action="{{url('pregled_osebja')}}" method="GET">
                 <button class="btn btn-light" type="submit">Pregled zaposlenih</button>
             </form>
         </td>
     </tr>
     <tr>
         <td>
-            <form action="/zaposleni/lokacije" method="GET">
+            <form action="{{url('pregled_lokacij')}}" method="GET">
                 <button class="btn btn-light" type="submit">Pregled lokacij in njihovih sob</button>
             </form>
         </td>
     </tr>
     <tr>
         <td>
-            <form action="/zaposleni/zajtrki" method="GET">
+            <form action="{{url('pregled_zajtrkov')}}" method="GET">
                 <button class="btn btn-light" type="submit">Pregled zajtrkov</button>
             </form>
         </td>

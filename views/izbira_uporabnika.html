@@ -23,7 +23,7 @@
  <p>
  
  <div style = "position:fixed; top:480px">
-    <form action="/rezervacija/nova/lokacija" method="GET">
+    <form action="{{url('izbira_lokacije')}}" method="GET">
         <button class="btn btn-outline-danger" type="submit">Želim rezervirati!</button>
         </form> 
  </div>
@@ -31,14 +31,14 @@
  <table class="table table-borderless align-middle" style="position:fixed; top:520px">
     <tr>
         <td>
-            <form action="/rezervacija/prijava" method="GET">
+            <form action="{{url('rezervacija_prijava_get')}}" method="GET">
                 <button class="btn btn-outline-dark" type="submit">Že imaš rezervacijo in bi si jo rad/a ogledal/a ali uredil/a?</button>
             </form>
         </td>
     </tr>
     <tr>
         <td>
-            <form action="/zaposleni/prijava" method="GET">
+            <form action="{{url('prijava_get')}}" method="GET">
                 <button class="btn btn-outline-dark" type="submit">Si zaposleni in se želiš prijaviti?</button>
             </form>
         </td>
