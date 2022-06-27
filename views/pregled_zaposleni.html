@@ -17,7 +17,7 @@
         <td>{{ime}}</td>
         <td>{{priimek}}</td>
         <td>
-            <form action="/zaposleni/osebje/uredi/{{emso}}" method="get">
+            <form action="{{url('uredi_zaposlenega_get',emso=emso)}}" method="get">
                 <a href="#" onclick="this.parentElement.submit()" class="link-secondary">Uredi zaposlenega</a>
             </form>
         </td>

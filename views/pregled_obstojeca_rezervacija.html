@@ -33,7 +33,7 @@
     <div class="row g-0">
         <div class="col-8"></div>
         <div class="col-sm-6 col-md-2">
-            <form action="/rezervacija/pregled/{{id}}/uredi" method="get">
+            <form action="{{url('uredi_rezervacijo_get',id=id)}}" method="get">
                 <button href="#" onclick="this.parentElement.submit()" class="btn btn-dark">Uredi svojo rezervacijo</a>
             </form>
         </div>

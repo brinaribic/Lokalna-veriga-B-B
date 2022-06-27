@@ -17,7 +17,7 @@
         <td>{{lokacija}}</td>
         <td>{{ime}} {{priimek}}</td>
         <td>
-            <form action="/zaposleni/sobe/{{id}}" method="get">
+            <form action="{{url('pregled_sob_lokacije',id=id)}}" method="get">
                 <a href="#" onclick="this.parentElement.submit()" class="link-secondary">Preglej sobe na lokaciji</a>
             </form>
         </td>

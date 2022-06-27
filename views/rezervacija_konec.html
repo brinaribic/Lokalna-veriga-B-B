@@ -13,12 +13,12 @@
 
 <div class="row g-0">
     <div class="col-sm-6 col-md-2">
-        <form action="/rezervacija/pregled/{{id}}" method="get">
+        <form action="{{url('pregled_rezervacije',id=id)}}" method="get">
             <button href="#" onclick="this.parentElement.submit()" class="btn btn-dark">Oglej si svojo rezervacijo</button>
         </form>
     </div>
     <div class="col-6 col-md-2">
-        <form action="/izbira_uporabnika" method="get">
+        <form action="{{url('izbira_uporabnika')}}" method="get">
             <button href="#" onclick="this.parentElement.submit()" class="btn btn-dark">Vrnitev na začetno stran</button>
         </form>
     </div>

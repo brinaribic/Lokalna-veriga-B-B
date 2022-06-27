@@ -4,7 +4,7 @@
 
 % include('orodna_vrstica.html', povezava='', napis='', stolpci='[0,1,2,3]')
 
-<form action="/zaposleni/sobe/{{sobe[0]}}" method="get">
+<form action="{{url('pregled_sob_lokacije', id=sobe[0])}}" method="get">
     <table id="izpis" class="table table-hover">
         <thead class="table-secondary">
         <tr>

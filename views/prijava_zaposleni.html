@@ -1,7 +1,7 @@
 % setdefault('napaka', '')
 % rebase('base.html', povezava='/zaposleni/prijava', zavihek='Zaposleni', naslov='Prijava za zaposlene', napaka=napaka)
 
-<form action="/zaposleni/prijava" method="post" class="row-g3 mx-2">
+<form action="{{url('prijava_post')}}" method="post" class="row-g3 mx-2">
     <div class="col-4">
         <label for="emso" class="form-label my-3">Emšo:</label>
         <input id="emso" name="emso" type="number" class="form-control" />

@@ -3,9 +3,9 @@
 % rebase('base.html', povezava='', zavihek='', naslov=naslov, napaka=napaka)
 
 % if defined('zaposleni'):
-<form action="/zaposleni/osebje/uredi/{{zaposleni[0]}}" method="post" class="row-g3 mx-2">
+<form action="{{url('uredi_zaposlenega_post',emso=zaposleni[0])}}" method="post" class="row-g3 mx-2">
 % else:
-<form action="/zaposleni/osebje/dodaj" method="post" class="row-g3 mx-2">
+<form action="{{url('dodaj_zaposlenega')}}" method="post" class="row-g3 mx-2">
 % end
 <div class="row">
     <div class="col-6">

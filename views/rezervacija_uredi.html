@@ -2,7 +2,7 @@
 % setdefault('naslov', 'Urejanje obstoječe rezervacije')
 % rebase('base.html', povezava='', zavihek='', naslov=naslov, napaka=napaka)
 
-<form action="/rezervacija/pregled/{{rezervacija[0]}}/uredi" method="post" class="row-g3 mx-2">
+<form action="{{url('uredi_rezervacija_post',id = rezervacija[0])}}" method="post" class="row-g3 mx-2">
     <div class="col-6">
         <label for="id" class="form-label my-3">Id:</label>
         <input type="text" readonly class="form-control-plaintext" id="id" value="{{rezervacija[0]}}">

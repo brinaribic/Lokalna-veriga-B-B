@@ -1,7 +1,7 @@
 % setdefault('napaka', '')
 % rebase('base.html', povezava='/rezervacija/prijava', zavihek='Pregled rezervacije', naslov='Prijava za ogled rezervacije', napaka=napaka)
 
-<form action="/rezervacija/prijava" method="post" class="row-g3 mx-2">
+<form action="{{url('rezervacija_prijava_post')}}" method="post" class="row-g3 mx-2">
     <div class="col-4">
         <label for="id" class="form-label my-3">Številka rezervacije:</label>
         <input id="id" name="id" type="number" class="form-control" />

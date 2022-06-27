@@ -7,7 +7,7 @@
 
 <p class="mx-2">Če želiš ustvariti novo rezervacijo, izpolni sledeči obrazec.</p>
 
-<form action="/rezervacija/nova/{{id}}" method="post" class="row-g3 mx-2">
+<form action="{{url('nova_rezervacija',id_lokacije=id)}}" method="post" class="row-g3 mx-2">
     <div class="col-6">
         <label for="rezervirana_soba" class="form-label">Soba:</label>
         <select id="rezervirana_soba" name="rezervirana_soba" type="text" class="form-select" required
