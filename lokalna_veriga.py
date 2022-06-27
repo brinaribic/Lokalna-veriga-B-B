@@ -15,9 +15,12 @@ def nastaviSporocilo(sporocilo = None):
     napakaSporocilo = sporocilo
     return staro
 
-conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
-cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
+SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
+RELOADER = os.environ.get('BOTTLE_RELOADER', True)
+DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
 
+conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password, port=DB_PORT)
+run(host='localhost', port=SERVER_PORT, reloader=RELOADER)
 
 # mapa za statične vire
 static_dir = "./static"
