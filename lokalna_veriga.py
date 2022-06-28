@@ -1,4 +1,4 @@
-from bottle import *
+from bottleext import *
 import auth_public as auth
 import psycopg2, psycopg2.extensions, psycopg2.extras
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo problemov s sumniki
@@ -6,6 +6,7 @@ psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo prob
 import os
 import hashlib
 import datetime
+
 
 napakaSporocilo = None
 # funkcija za brisanje in nastavljanje sporočila ob morebitnem pojavu napake
@@ -18,9 +19,6 @@ def nastaviSporocilo(sporocilo = None):
 SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
 RELOADER = os.environ.get('BOTTLE_RELOADER', True)
 DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
-
-conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password, port=DB_PORT)
-run(host='localhost', port=SERVER_PORT, reloader=RELOADER)
 
 # mapa za statične vire
 static_dir = "./static"
@@ -418,6 +416,11 @@ def brisi_rezervacijo_post(id):
     return template('rezervacija_izbris.html')
 
 
+conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password, port=DB_PORT)
+cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
+
+run(host='localhost', port=SERVER_PORT, reloader=RELOADER)
+
 
 # poženemo strežnik na portu 8080, glej http://localhost:8080/
-run(host='localhost', port=8080)
+# run(host='localhost', port=8080)

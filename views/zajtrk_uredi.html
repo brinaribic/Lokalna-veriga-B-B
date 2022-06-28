@@ -3,7 +3,7 @@
 % rebase('base.html', povezava='', zavihek='', naslov=naslov, napaka=napaka)
 
 % if defined('zajtrk'):
-<form action="{{url('uredi_zajtrk_post',id=zajtk[0])}}" method="post" class="row-g3 mx-2">
+<form action="{{url('uredi_zajtrk_post',id=zajtrk[0])}}" method="post" class="row-g3 mx-2">
 % else:
 <form action="{{url('dodaj_zajtrk')}}" method="post" class="row-g3 mx-2">
 % end
