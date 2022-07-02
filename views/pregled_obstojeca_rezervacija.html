@@ -5,28 +5,27 @@
     <thead class="table-secondary">
     <tr>
         <th>id</th>
+        <th>Izbrana lokacija</th>
         <th>Rezervirana soba</th>
         <th>Pričetek bivanja</th>
         <th>Število nočitev</th>
         <th>Cena bivanja</th>
         <th>Izbran zajtrk</th>
-        <th>Cena zajtrkov</th>
+        <th>Cena zajtrka</th>
         <th>Cena skupaj</th>
-        <!-- vključi: Konec bivanja -->
     </tr>
 </thead>
-    %for (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime) in rezervacija:
+    %for (id, lokacija, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, zajtrk) in rezervacija:
         <tr>
             <td>{{id}}</td>
+            <td>{{lokacija}}</td>
             <td>{{rezervirana_soba}}</td>
             <td>{{pricetek_bivanja}}</td>
             <td>{{stevilo_nocitev}}</td>
             <td>{{cena_soba}} €</td>
-            <td>{{ime}}</td>
+            <td>{{zajtrk}}</td>
             <td>{{cena_zajtrk}} €</td>
             <td>{{skupaj_cena}} €</td>
-            <!-- vključi: Konec bivanja -->
-            
         </tr>
     </table>  
 

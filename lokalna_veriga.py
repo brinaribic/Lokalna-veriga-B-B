@@ -78,8 +78,7 @@ def prijava_post():
         redirect(url('prijava_get'))
         return
     redirect(url('izbira_pregleda'))
-
-
+    
 
 #################################################################
 ### Možnosti pregleda za zaposlene
@@ -93,8 +92,10 @@ def izbira_pregleda():
 @get('/zaposleni/rezervacije')
 def pregled_vseh_rezervacij():
     cur.execute("""
-        SELECT rezervacija.id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime
+        SELECT rezervacija.id, lokacija.ime AS lokacija,  rezervirana_soba, pricetek_bivanja, stevilo_nocitev, zajtrk.ime AS zajtrk
         FROM rezervacija 
+        INNER JOIN soba ON rezervacija.rezervirana_soba = soba.id
+        INNER JOIN lokacija ON soba.lokacija = lokacija.id
         INNER JOIN zajtrk ON rezervacija.vkljucuje = zajtrk.id 
         ORDER BY pricetek_bivanja
     """)
@@ -175,9 +176,14 @@ def uredi_zaposlenega_get(emso):
 def uredi_zaposlenega_post(emso):
     ime = request.forms.ime
     priimek = request.forms.priimek
-    cur.execute("UPDATE zaposleni SET ime = %s, priimek = %s WHERE emso = %s", (ime, priimek, emso))
-    conn.commit()
-    redirect(url('pregled_osebja'))
+    try:
+        cur.execute("UPDATE zaposleni SET ime = %s, priimek = %s WHERE emso = %s", (ime, priimek, emso))
+        conn.commit()
+        redirect(url('pregled_osebja'))
+    except psycopg2.DatabaseError:
+        conn.rollback()
+        nastaviSporocilo('Urejanje zaposlenega z emšo-m {0} ni bilo uspešno.'.format(emso))
+        redirect(url('pregled_osebja'))
 
 #################################################################
 ### Urejanje zajtrkov
@@ -208,9 +214,14 @@ def uredi_zajtrk_get(id):
 def uredi_zajtrk_post(id):
     ime = request.forms.ime
     cena = request.forms.cena
-    cur.execute("UPDATE zajtrk SET ime = %s, cena = %s WHERE id = %s", (ime, cena, id))
-    conn.commit()
-    redirect(url('pregled_zajtrkov'))
+    try:
+        cur.execute("UPDATE zajtrk SET ime = %s, cena = %s WHERE id = %s", (ime, cena, id))
+        conn.commit()
+        redirect(url('pregled_zajtrkov'))
+    except psycopg2.DatabaseError: 
+        conn.rollback()
+        nastaviSporocilo('Urejanje zajtrka z id-jem {0} ni bilo uspešno.'.format(id))
+        redirect(url('pregled_zajtrkov'))
 
 #################################################################
 ### Rezervacija
@@ -233,11 +244,11 @@ def rezervacija_prijava_post():
         hashBaza = None
     if hashBaza is None:
         nastaviSporocilo('Prijava ni mogoča.') 
-        redirect('/rezervacija/prijava')
+        redirect(url('rezervacija_prijava_get'))
         return
     if hashGesla(geslo) != hashBaza:
         nastaviSporocilo('Nekaj je šlo narobe.') 
-        redirect('/rezervacija/prijava')
+        redirect(url('rezervacija_prijava_get'))
         return
     redirect(url('pregled_rezervacije', id=id))
 
@@ -338,18 +349,20 @@ def konec_rezervacije(id):
 @get('/rezervacija/pregled/<id>')
 def pregled_rezervacije(id):
     cur.execute(""" 
-                SELECT rezervacija.id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, ime
-                FROM rezervacija 
-                INNER JOIN zajtrk ON rezervacija.vkljucuje = zajtrk.id 
-                WHERE rezervacija.id = %s
-                """, 
+        SELECT rezervacija.id, lokacija.ime AS lokacija, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, zajtrk.ime AS zajtrk
+        FROM rezervacija 
+        INNER JOIN soba ON rezervacija.rezervirana_soba = soba.id
+        INNER JOIN lokacija ON soba.lokacija = lokacija.id
+        INNER JOIN zajtrk ON rezervacija.vkljucuje = zajtrk.id 
+        WHERE rezervacija.id = %s
+        """, 
     (id, ))
     rezervacija = cur.fetchall()
-    stevilo_nocitev = datetime.timedelta(rezervacija[0][3])
-    pricetek_bivanja = datetime.datetime.strptime(str(rezervacija[0][2]), "%Y-%m-%d")
+    stevilo_nocitev = datetime.timedelta(rezervacija[0][4])
+    pricetek_bivanja = datetime.datetime.strptime(str(rezervacija[0][3]), "%Y-%m-%d")
     konec_bivanja = stevilo_nocitev + pricetek_bivanja
     konec_bivanja = konec_bivanja.date()
-    rez_soba = rezervacija[0][1]
+    rez_soba = rezervacija[0][2]
     cur.execute("""
     SELECT id, velikost, lokacija, cena
     FROM soba
@@ -361,8 +374,8 @@ def pregled_rezervacije(id):
     """,
     (rez_soba, ))
     soba = cur.fetchall()
-    cena_soba = soba[0][3]*rezervacija[0][3]
-    vklj_zajtrk = rezervacija[0][4]
+    cena_soba = soba[0][3]*rezervacija[0][4]
+    vklj_zajtrk = rezervacija[0][5]
     cur.execute("""
     SELECT id, ime, cena
     FROM zajtrk
@@ -371,7 +384,7 @@ def pregled_rezervacije(id):
     """,
     (vklj_zajtrk, ))
     zajtrki = cur.fetchall()
-    cena_zajtrk = rezervacija[0][3]*zajtrki[0][2]
+    cena_zajtrk = rezervacija[0][4]*zajtrki[0][2]
     skupaj_cena = cena_zajtrk + cena_soba
     return template('pregled_obstojeca_rezervacija.html', rezervacija=rezervacija, 
                     konec_bivanja=konec_bivanja, cena_soba=cena_soba, cena_zajtrk = cena_zajtrk, skupaj_cena=skupaj_cena)
@@ -380,10 +393,11 @@ def pregled_rezervacije(id):
 @get('/rezervacija/pregled/<id>/uredi')
 def uredi_rezervacijo_get(id):
     cur.execute("""
-        SELECT rezervacija.id, soba.velikost, soba.cena, pricetek_bivanja, stevilo_nocitev, ime
+        SELECT rezervacija.id, lokacija.ime AS lokacija, soba.velikost, soba.cena, pricetek_bivanja, stevilo_nocitev, zajtrk.ime AS zajtrk
         FROM rezervacija 
-        INNER JOIN zajtrk ON rezervacija.vkljucuje = zajtrk.id 
         INNER JOIN soba ON rezervacija.rezervirana_soba = soba.id
+        INNER JOIN lokacija ON soba.lokacija = lokacija.id
+        INNER JOIN zajtrk ON rezervacija.vkljucuje = zajtrk.id 
         WHERE rezervacija.id = %s
     """, 
     (id, ))
@@ -400,20 +414,28 @@ def uredi_rezervacijo_get(id):
 def uredi_rezervacija_post(id):
     pricetek_bivanja = request.forms.pricetek_bivanja
     stevilo_nocitev = request.forms.stevilo_nocitev
-    ime = request.forms.ime
-    cur.execute("UPDATE rezervacija SET pricetek_bivanja = %s, stevilo_nocitev = %s, vkljucuje = %s WHERE id = %s", (pricetek_bivanja, stevilo_nocitev, ime, id))
-    conn.commit()
-    redirect(url('konec_rezervacije',id=id))
+    zajtrk = request.forms.zajtrk
+    try:
+        cur.execute("UPDATE rezervacija SET pricetek_bivanja = %s, stevilo_nocitev = %s, vkljucuje = %s WHERE id = %s", (pricetek_bivanja, stevilo_nocitev, zajtrk, id))
+        conn.commit()
+        redirect(url('pregled_rezervacije',id=id))
+    except psycopg2.DatabaseError: 
+        conn.rollback()
+        nastaviSporocilo('Urejanje rezervacije z id-jem {0} ni bilo uspešno.'.format(id))
+        redirect(url('pregled_rezervacije', id=id))
+
 
 # brisanje rezervacije
 @post('/rezervacija/pregled/<id>/brisi')
 def brisi_rezervacijo_post(id):
     try:
         cur.execute("DELETE FROM rezervacija WHERE id = %s", (id, ))
-    except:
+        conn.commit()
+        redirect(url('brisi_rezervacijo_get'))
+    except psycopg2.DatabaseError:
+        conn.rollback()
         nastaviSporocilo('Brisanje rezervacije z id-jem {0} ni bilo uspešno.'.format(id)) 
-    conn.commit()
-    return template('rezervacija_izbris.html')
+        redirect(url('pregled_rezervacije', id=id)) 
 
 
 conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password, port=DB_PORT)

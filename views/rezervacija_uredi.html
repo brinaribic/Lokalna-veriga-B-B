@@ -8,26 +8,30 @@
         <input type="text" readonly class="form-control-plaintext" id="id" value="{{rezervacija[0]}}">
     </div>
     <div class="col-6">
+        <label for="lokacija" class="form-label">Lokacija:</label>
+        <input type="text" readonly class="form-control-plaintext" id="id" value="{{rezervacija[1]}}">
+    </div>
+    <div class="col-6">
         <label for="rezervirana_soba" class="form-label">Soba:</label>
-        <input type="text" readonly class="form-control-plaintext" id="id" value="{{rezervacija[1]}}, {{rezervacija[2]}}€">
+        <input type="text" readonly class="form-control-plaintext" id="id" value="{{rezervacija[2]}}, {{rezervacija[3]}}€">
     </div>
     <div class="mb-3 row">
         <div class="col-6">
             <label for="pricetek_bivanja" class="form-label my-3">Datum prihoda:</label>
-            <input id="pricetek_bivanja" name="pricetek_bivanja" type="date" value="{{rezervacija[3]}}" class="form-control" required
+            <input id="pricetek_bivanja" name="pricetek_bivanja" type="date" value="{{rezervacija[4]}}" class="form-control" required
                     oninput="preveriPolje(this)"
                     oninvalid="preveriPolje(this)" />
         </div>
         <div class="col-6">
             <label for="stevilo_nocitev" class="form-label my-3">Število nočitev:</label>            
-            <input id="stevilo_nocitev" name="stevilo_nocitev" type="number" step="1" value="{{rezervacija[4]}}" class="form-control" required
+            <input id="stevilo_nocitev" name="stevilo_nocitev" type="number" step="1" value="{{rezervacija[5]}}" class="form-control" required
                     oninput="preveriPolje(this)"
                     oninvalid="preveriPolje(this)" />
         </div>
     </div>
     <div class="col-6">
-        <label for="ime" class="form-label my-2">Vrsta zajtrka:</label>
-        <select id="ime" name="ime" type="text" value="{{rezervacija[5]}}" class="form-select my-2"> 
+        <label for="zajtrk" class="form-label my-2">Vrsta zajtrka:</label>
+        <select id="zajtrk" name="zajtrk" type="text" value="{{rezervacija[5]}}" class="form-select my-2"> 
             %for (id, ime, cena) in zajtrki:
             %if ime == rezervacija[5]:
             <option selected value="{{id}}">{{ime}}, {{cena}} €</option>
