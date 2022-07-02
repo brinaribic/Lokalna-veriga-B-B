@@ -9,20 +9,25 @@
 <tr>
     %for i in range(0, len(lokacija)//2):
         <form action="{{url('nova_rezervacija', id_lokacije=lokacija[i][0])}}" method="get">    
-            <td><button class="btn btn-light btn-outline-dark" type="submit">{{lokacija[i][1]}}</button>
-                <img src='/static/hotel{{i+1}}.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
-            </td>
+            <td><button class="btn btn-light btn-outline-dark" type="submit">{{lokacija[i][1]}}</button></td>
         </form>
+    %end 
+</tr>
+<tr>
+    %for i in range(0, len(lokacija)//2):            
+    <td><img src='/static/hotel{{i+1}}.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
     %end 
 </tr>
 <tr>
     %for j in range(len(lokacija)//2, len(lokacija)):
             <form action="{{url('nova_rezervacija', id_lokacije=lokacija[j][0])}}" method="get">
-                <td><button class="btn btn-light btn-outline-dark" type="submit" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Prosim izberite lokacijo">
-                    {{lokacija[j][1]}}</button>
-                    <img src='/static/hotel{{j+1}}.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
-                </td>
+                <td><button class="btn btn-light btn-outline-dark" type="submit">{{lokacija[j][1]}}</button></td>
             </form>
+    %end 
+</tr>
+<tr>
+    %for j in range(len(lokacija)//2, len(lokacija)):
+    <td><img src='/static/hotel{{j+1}}.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
     %end 
 </tr>
 </table>
