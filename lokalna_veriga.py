@@ -41,7 +41,7 @@ def hashGesla(s):
 
 @get('/')
 def index():
-    redirect('/izbira_uporabnika')
+    redirect(url('izbira_uporabnika'))
 
 # Ali se želimo prijaviti kot zaposleni ali skozi rezervacijo:
 @get('/izbira_uporabnika')
