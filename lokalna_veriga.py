@@ -294,7 +294,7 @@ def dodaj_rezervacijo(id_lokacije):
     cur.execute("INSERT INTO rezervacija (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, geslo) VALUES (%s, %s, %s, %s, %s, %s)",
                     (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, zgostitev))
     conn.commit()
-    redirect(url('konec_rezervacije', id_lokacije=id))
+    redirect(url('konec_rezervacije', id=id))
 
 @get('/rezervacija/zakljucek/<id>')
 def konec_rezervacije(id):
