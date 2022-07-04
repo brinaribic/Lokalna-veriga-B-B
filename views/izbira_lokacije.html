@@ -14,9 +14,11 @@
     %end 
 </tr>
 <tr>
-    %for i in range(0, len(lokacija)//2):            
-    <td><img src='/static/hotel{{i+1}}.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
-    %end 
+    <td><img src={{url('static', filename='hotel1.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
+    <td><img src={{url('static', filename='hotel9.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
+    <td><img src={{url('static', filename='hotel2.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
+    <td><img src={{url('static', filename='hotel3.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
+    <td><img src={{url('static', filename='hotel4.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
 </tr>
 <tr>
     %for j in range(len(lokacija)//2, len(lokacija)):
@@ -26,8 +28,10 @@
     %end 
 </tr>
 <tr>
-    %for j in range(len(lokacija)//2, len(lokacija)):
-    <td><img src='/static/hotel{{j+1}}.jpg' alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
-    %end 
+    <td><img src={{url('static', filename='hotel5.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
+    <td><img src={{url('static', filename='hotel6.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
+    <td><img src={{url('static', filename='hotel7.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
+    <td><img src={{url('static', filename='hotel8.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
+    <td><img src={{url('static', filename='hotel10.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;"></td>
 </tr>
 </table>
