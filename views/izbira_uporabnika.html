@@ -19,30 +19,26 @@
     <img src={{url('static', filename='hotel8.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
     <img src={{url('static', filename='hotel10.jpg')}} alt="Hotel" class="rounded float-start" style="width:150px;height:150px;">
 </div>
- </p>
- <p>
+</p>
+<p>
  
- <div style = "position:fixed; top:480px">
+<div style="position:fixed; top:480px">
     <form action="{{url('izbira_lokacije')}}" method="GET">
         <button class="btn btn-outline-danger" type="submit">Želim rezervirati!</button>
-        </form> 
- </div>
+    </form> 
+</div>
 
- <table class="table table-borderless align-middle" style="position:fixed; top:520px">
-    <tr>
-        <td>
-            <form action="{{url('rezervacija_prijava_get')}}" method="GET">
-                <button class="btn btn-outline-dark" type="submit">Že imaš rezervacijo in bi si jo rad/a ogledal/a ali uredil/a?</button>
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <form action="{{url('prijava_get')}}" method="GET">
-                <button class="btn btn-outline-dark" type="submit">Si zaposleni in se želiš prijaviti?</button>
-            </form>
-        </td>
-    </tr>
-</table>
+<div style="position:fixed; top:525px">
+    <form action="{{url('rezervacija_prijava_get')}}" method="GET">
+        <button class="btn btn-outline-dark" type="submit">Že imaš rezervacijo in bi si jo rad/a ogledal/a ali uredil/a?</button>
+    </form>
+</div>
+
+<div style="position:fixed; top:570px">
+    <form action="{{url('prijava_get')}}" method="GET">
+        <button class="btn btn-outline-dark" type="submit">Si zaposleni in se želiš prijaviti?</button>
+    </form>
+</div>
+
 
 
