@@ -24,22 +24,22 @@
                     % zavihki = ['Začetna stran', 'Zaposleni', 'Pregled rezervacije', 'Nova rezervacija']
                     % for i in range(len(moznosti)):
                     % if moznosti[i] == povezava:
-                    <li class="nav-item"><a class="nav-link active" href="{{url(povezava)}}">{{zavihek}}</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{povezava}}">{{zavihek}}</a></li>
                     % else:
-                    <li class="nav-item"><a class="nav-link" href="{{url(moznosti[i])}}">{{zavihki[i]}}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{moznosti[i]}}">{{zavihki[i]}}</a></li>
                     % end
                     % end
                     % if defined('pregled'):
                     % pregledi = ['/zaposleni/rezervacije', '/zaposleni/osebje', '/zaposleni/lokacije', '/zaposleni/zajtrki']
                     % izbire = ['Pregled rezervacij', 'Pregled zaposlenih', 'Pregled lokacij', 'Pregled zajtrkov']
                     <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle active" href="{{url(povezava)}}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pregledi</a>
+                    <a class="nav-link dropdown-toggle active" href="{{povezava}}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pregledi</a>
                         <ul class="dropdown-menu"  aria-labelledby="navbarDropdown">
                         % for i in range(len(pregledi)):
                         % if pregledi[i] == pregled:
-                        <li><a class="dropdown-item active" href="{{url(pregled)}}">{{izbira}}</a></li>
+                        <li><a class="dropdown-item active" href="{{pregled}}">{{izbira}}</a></li>
                         % else:
-                        <li><a class="dropdown-item" href="{{url(pregledi[i])}}">{{izbire[i]}}</a></li>
+                        <li><a class="dropdown-item" href="{{pregledi[i]}}">{{izbire[i]}}</a></li>
                         % end
                         % end
                         </ul>
