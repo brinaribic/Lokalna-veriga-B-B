@@ -20,27 +20,17 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
-                    % moznosti = ['/izbira_uporabnika', '/zaposleni/prijava', '/rezervacija/prijava', '/rezervacija/nova/lokacija']
-                    % zavihki = ['Začetna stran', 'Zaposleni', 'Pregled rezervacije', 'Nova rezervacija']
-                    % for i in range(len(moznosti)):
-                    % if moznosti[i] == povezava:
-                    <li class="nav-item"><a class="nav-link active" href="{{povezava}}">{{zavihek}}</a></li>
-                    % else:
-                    <li class="nav-item"><a class="nav-link" href="{{moznosti[i]}}">{{zavihki[i]}}</a></li>
-                    % end
+                    % moznosti = [('izbira_uporabnika', 'Začetna stran'), ('prijava_get', 'Zaposleni'), ('rezervacija_prijava_get', 'Pregled rezervacije'), ('izbira_lokacije', 'Nova rezervacija')]
+                    % for funkcija, zavihek in moznosti:
+                    <li class="nav-item"><a class="nav-link {{'active' if funkcija == povezava else ''}}" href="{{url(funkcija)}}">{{zavihek}}</a></li>
                     % end
                     % if defined('pregled'):
-                    % pregledi = ['/zaposleni/rezervacije', '/zaposleni/osebje', '/zaposleni/lokacije', '/zaposleni/zajtrki']
-                    % izbire = ['Pregled rezervacij', 'Pregled zaposlenih', 'Pregled lokacij', 'Pregled zajtrkov']
+                    % pregledi = [('pregled_vseh_rezervacij', 'Pregled rezervacij'), ('pregled_osebja', 'Pregled zaposlenih'), ('pregled_lokacij', 'Pregled lokacij'), ('pregled_zajtrkov', 'Pregled zajtrkov')]
                     <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle active" href="{{povezava}}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pregledi</a>
+                    <a class="nav-link dropdown-toggle active" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pregledi</a>
                         <ul class="dropdown-menu"  aria-labelledby="navbarDropdown">
-                        % for i in range(len(pregledi)):
-                        % if pregledi[i] == pregled:
-                        <li><a class="dropdown-item active" href="{{pregled}}">{{izbira}}</a></li>
-                        % else:
-                        <li><a class="dropdown-item" href="{{pregledi[i]}}">{{izbire[i]}}</a></li>
-                        % end
+                        % for funkcija, izbira in pregledi:
+                        <li><a class="dropdown-item {{'active' if funkcija == pregled else ''}}" href="{{url(funkcija)}}">{{izbira}}</a></li>
                         % end
                         </ul>
                     </li>
