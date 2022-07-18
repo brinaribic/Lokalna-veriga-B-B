@@ -294,16 +294,19 @@ def nova_rezervacija(id_lokacije):
 
 @post('/rezervacija/nova/<id_lokacije>')
 def dodaj_rezervacijo(id_lokacije):
-    cur.execute("SELECT MAX(id) FROM rezervacija")
-    id = cur.fetchall()[0][0] + 1 
     rezervirana_soba = request.forms.rezervirana_soba
     pricetek_bivanja = request.forms.pricetek_bivanja
     stevilo_nocitev = request.forms.stevilo_nocitev
     vkljucuje = request.forms.vkljucuje
     geslo = request.forms.geslo
     zgostitev = hashGesla(geslo)
-    cur.execute("INSERT INTO rezervacija (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, geslo) VALUES (%s, %s, %s, %s, %s, %s)",
-                    (id, rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, zgostitev))
+    cur.execute("""
+        INSERT INTO rezervacija (rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, geslo)
+        VALUES (%s, %s, %s, %s, %s)
+        RETURNING id
+    """, (rezervirana_soba, pricetek_bivanja, stevilo_nocitev, vkljucuje, zgostitev))
+    id, = cur.fetchone()
+
     conn.commit()
     redirect(url('konec_rezervacije', id=id))
 
