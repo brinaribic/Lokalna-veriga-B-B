@@ -429,6 +429,10 @@ def uredi_rezervacija_post(id):
 
 
 # brisanje rezervacije
+
+@get('/rezervacija/izbris')
+def brisi_rezervacijo_get():
+    return template('rezervacija_izbris.html')
    
 @post('/rezervacija/pregled/<id>/brisi')
 def brisi_rezervacijo_post(id):
