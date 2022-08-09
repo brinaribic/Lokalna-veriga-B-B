@@ -37,7 +37,7 @@
             </form>
         </div>
         <div class="col-6 col-md-2">
-            <form action="/rezervacija/pregled/{{id}}/brisi" method="post">
+            <form action="{{url('brisi_rezervacijo_post',id=id)}}" method="post">
                 <button href="#" onclick="this.parentElement.submit()" class="btn btn-dark">Izbriši svojo rezervacijo</a>
             </form>
         </div>
